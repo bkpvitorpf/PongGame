@@ -1,4 +1,8 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JFrame;
+import javax.swing.Timer;
 import javax.swing.WindowConstants;
 
 public class Main {
@@ -6,7 +10,6 @@ public class Main {
     static JFrame f = new JFrame("Pong");
 
     public static void main(String[] args) {
-
         // make it so program exits on close button click
         f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -23,5 +26,18 @@ public class Main {
         // show the window
         f.setVisible(true);
 
+        // make a new Timer
+        Timer timer = new Timer(30, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // game logic
+                game.gameLogic();
+
+                // repaint the screen
+                game.repaint();
+            }
+        });
+
+        timer.start();
     }
 }
