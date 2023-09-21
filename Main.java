@@ -5,6 +5,8 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.WindowConstants;
 
+import Game.Screens.Game;
+
 public class Main {
     // declare and initialize the frame
     static JFrame f = new JFrame("Pong");
@@ -18,7 +20,7 @@ public class Main {
         f.setSize(650, 495);
 
         // make the new PongGame
-        PongGame game = new PongGame();
+        Game game = new Game();
 
         // add the game to the JFrame
         f.add(game);
@@ -27,7 +29,7 @@ public class Main {
         f.setVisible(true);
 
         // make a new Timer
-        Timer timer = new Timer(30, new ActionListener() {
+        Timer timer = new Timer(33, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // game logic
