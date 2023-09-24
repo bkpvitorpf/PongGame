@@ -32,9 +32,10 @@ public class Main {
 
         // show the window
         f.setVisible(true);
+        
 
         // make a new Timer
-        Timer timer = new Timer(33, new ActionListener() {
+        Timer timer = new Timer(25, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // game logic
@@ -46,5 +47,7 @@ public class Main {
         });
 
         timer.start();
+        
     }
+    
 }

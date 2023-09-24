@@ -39,7 +39,7 @@ public class Ball {
      */
     public void bounceOnEdges(int top, int bottom) {
         // Verifica se a coordenada y da bola passa do limite inferior da tela
-        if (this.yPosition > (bottom - this.size) || this.yPosition < (top - this.size)) {
+        if (this.yPosition > (bottom - this.size) || this.yPosition < top) {
             reverseYDirection();
         }
     }
@@ -47,5 +47,29 @@ public class Ball {
     // Inverte o sentido e muda a direção da bola
     private void reverseYDirection() {
         this.yDirection *= -1;
+    }
+
+    private void reverseXDirection() {
+        this.xDirection *= -1;
+    }
+
+    //Pega a posição X da Bola
+    public int getXPosition(){
+        return this.xPosition;
+    }
+
+    public int getYPosition(){
+        return this.yPosition;
+    }
+
+    public void checkColision(int yPaddlePosition,int paddleHeight, int paddleWidth, int windoWidth){
+        //Roda a verificação da colisão apenas se a posição y da bola estiver abaixo da posição y do paddle e acima da posição y+altura do paddle
+        if(this.yPosition < (yPaddlePosition+paddleHeight) && this.yPosition > yPaddlePosition){
+
+            //
+            if((this.xPosition + this.size) <= (paddleWidth+this.size) || (this.xPosition + this.size) >= (windoWidth - paddleWidth)){
+                reverseXDirection();
+            }
+        }
     }
 }

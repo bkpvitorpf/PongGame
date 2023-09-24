@@ -15,6 +15,7 @@ public class Paddle {
         this.height = height;
         this.speed = speed;
         this.color = color;
+        
     }
 
     public void paint(Graphics g) {
@@ -38,9 +39,41 @@ public class Paddle {
                 this.yPosition -= this.speed;
             }
         }
+        
+    }
+
+    public boolean checkCollison(Ball b){
+
+        int rightX =  xPosition + PADDLE_WIDTH;
+        int bottomY = yPosition + height;
+
+        //checando se a bola ta entre os valores de x
+        if(b.getXPosition() > xPosition && b.getXPosition() < rightX){
+        
+        if(b.getYPosition() > yPosition && b.getYPosition() < bottomY){
+            //if we get here, we know the ball and the paddle have collided
+            return true;
+        }
+    }
+
+    //if we get here, one of the checks failed, and the ball has not collided
+    return false;
+
     }
 
     public int getYPosition() {
         return this.yPosition;
+    }
+
+    public int getWidth(){
+        return PADDLE_WIDTH;
+    }
+
+    public int getHeight(){
+        return this.height;
+    }
+
+    public int getXPosition(){
+        return this.xPosition;
     }
 }

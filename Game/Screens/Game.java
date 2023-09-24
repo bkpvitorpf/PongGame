@@ -41,6 +41,8 @@ public class Game extends JPanel {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
+        
+        
         gameBall.paint(g);
 
         gamePaddle1.paint(g);
@@ -58,11 +60,39 @@ public class Game extends JPanel {
         // Verifica se há colisão da bola e aplica a lógica
         gameBall.bounceOnEdges(0, WINDOW_HEIGHT);
 
-        gamePaddle2.moveOnYAxisTo(-600);
+        gameBall.checkColision(gamePaddle1.getYPosition(),gamePaddle1.getHeight(),gamePaddle1.getWidth(),WINDOW_WIDTH);
 
+        gameBall.checkColision(gamePaddle2.getYPosition(),gamePaddle2.getHeight(),gamePaddle2.getWidth(),WINDOW_WIDTH);
+
+        //gamePaddle2.moveOnYAxisTo(-600);
+
+        //Paddle 1 ir para cima
         if (keyListener.isKeyPressed(KeyEvent.VK_UP)) {
             System.out.println("aaa");
-            gamePaddle1.moveOnYAxisTo(gamePaddle1.getYPosition() + 3);
+            if ((gamePaddle1.getYPosition() == 0)){}
+            else{  
+                gamePaddle1.moveOnYAxisTo(gamePaddle1.getYPosition() + 1);
+            }
+           
         }
+        //Paddle 1 ir para baixo
+         if (keyListener.isKeyPressed(KeyEvent.VK_DOWN)) {
+            System.out.println("bbb");
+            gamePaddle1.moveOnYAxisTo(740 - gamePaddle1.getYPosition() );
+        }
+        //Paddle 2 ir para cima
+        if (keyListener.isKeyPressed(KeyEvent.VK_W)) {
+            System.out.println("WWW");
+            if (gamePaddle2.getYPosition() == 0){}
+            else{
+                gamePaddle2.moveOnYAxisTo(gamePaddle2.getYPosition() + 1);
+            }
+        }
+        //Paddle 2 ir para baixo
+        if (keyListener.isKeyPressed(KeyEvent.VK_S)) {
+            System.out.println("SSS");
+            gamePaddle2.moveOnYAxisTo(740 - gamePaddle2.getYPosition());
+        }
+       
     }
 }
