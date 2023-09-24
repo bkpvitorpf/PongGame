@@ -39,4 +39,8 @@ public class Paddle {
             }
         }
     }
+
+    public int getYPosition() {
+        return this.yPosition;
+    }
 }

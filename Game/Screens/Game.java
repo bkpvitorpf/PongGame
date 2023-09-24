@@ -58,11 +58,11 @@ public class Game extends JPanel {
         // Verifica se há colisão da bola e aplica a lógica
         gameBall.bounceOnEdges(0, WINDOW_HEIGHT);
 
-        gamePaddle1.moveOnYAxisTo(600);
         gamePaddle2.moveOnYAxisTo(-600);
 
         if (keyListener.isKeyPressed(KeyEvent.VK_UP)) {
             System.out.println("aaa");
+            gamePaddle1.moveOnYAxisTo(gamePaddle1.getYPosition() + 3);
         }
     }
 }
