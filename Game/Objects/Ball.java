@@ -49,27 +49,16 @@ public class Ball {
         this.yDirection *= -1;
     }
 
-    private void reverseXDirection() {
+    public void reverseXDirection() {
         this.xDirection *= -1;
     }
 
-    //Pega a posição X da Bola
-    public int getXPosition(){
+    // Pega a posição X da Bola
+    public int getXPosition() {
         return this.xPosition;
     }
 
-    public int getYPosition(){
+    public int getYPosition() {
         return this.yPosition;
-    }
-
-    public void checkColision(int yPaddlePosition,int paddleHeight, int paddleWidth, int windoWidth){
-        //Roda a verificação da colisão apenas se a posição y da bola estiver abaixo da posição y do paddle e acima da posição y+altura do paddle
-        if(this.yPosition < (yPaddlePosition+paddleHeight) && this.yPosition > yPaddlePosition){
-
-            //
-            if((this.xPosition + this.size) <= (paddleWidth+this.size) || (this.xPosition + this.size) >= (windoWidth - paddleWidth)){
-                reverseXDirection();
-            }
-        }
     }
 }

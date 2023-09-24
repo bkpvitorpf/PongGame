@@ -15,7 +15,7 @@ public class Paddle {
         this.height = height;
         this.speed = speed;
         this.color = color;
-        
+
     }
 
     public void paint(Graphics g) {
@@ -39,41 +39,41 @@ public class Paddle {
                 this.yPosition -= this.speed;
             }
         }
-        
+
     }
 
-    public boolean checkCollison(Ball b){
+    public boolean checkCollision(Ball ball) {
+        // Pega a coordenada da borda direita do paddle
+        int xRightCoordinate = this.xPosition + PADDLE_WIDTH;
+        // Pega a coordenada da borda inferior do paddle
+        int yBottomCoordinate = this.yPosition + this.height;
 
-        int rightX =  xPosition + PADDLE_WIDTH;
-        int bottomY = yPosition + height;
-
-        //checando se a bola ta entre os valores de x
-        if(b.getXPosition() > xPosition && b.getXPosition() < rightX){
-        
-        if(b.getYPosition() > yPosition && b.getYPosition() < bottomY){
-            //if we get here, we know the ball and the paddle have collided
-            return true;
+        // Verifica se a coordenada x da bola está sobre o paddle
+        if (ball.getXPosition() > this.xPosition && ball.getXPosition() < xRightCoordinate) {
+            // Verifica se a coordenada y da bola está sobre o paddle
+            if (ball.getYPosition() > this.yPosition && ball.getYPosition() < yBottomCoordinate) {
+                // Se entrou neste if, é porque há colisão do paddle com a bola
+                return true;
+            }
         }
-    }
 
-    //if we get here, one of the checks failed, and the ball has not collided
-    return false;
-
+        // Caso não haja colisão, retorna falso
+        return false;
     }
 
     public int getYPosition() {
         return this.yPosition;
     }
 
-    public int getWidth(){
+    public int getWidth() {
         return PADDLE_WIDTH;
     }
 
-    public int getHeight(){
+    public int getHeight() {
         return this.height;
     }
 
-    public int getXPosition(){
+    public int getXPosition() {
         return this.xPosition;
     }
 }
