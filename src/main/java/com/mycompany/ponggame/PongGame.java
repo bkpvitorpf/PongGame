@@ -9,7 +9,7 @@ import Game.Screens.GameScreen;
 import System.Utilities.MyKeyListener;
 import System.Screens.OSWindow;
 
-public class Main {
+public class PongGame {
     static final int WINDOW_WIDTH = 640, WINDOW_HEIGHT = 480;
     // declare and initialize the frame
     static MyKeyListener keyListener = new MyKeyListener();
@@ -24,6 +24,8 @@ public class Main {
 
         // add the game to the JFrame
         myWindow.add(game);
+        
+        System.out.println(myWindow.toString());
 
         // show the window
         myWindow.setVisible(true);

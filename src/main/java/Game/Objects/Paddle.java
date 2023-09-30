@@ -11,19 +11,13 @@ import java.awt.*;
 public class Paddle extends GameObject{
     // Definindo a classe GameObject como superclasse da classe Paddle
     //declaração das variaveis
-    private int height, xPosition, yPosition, speed;
-    private Color color;
     static final int PADDLE_WIDTH = 15;
 
     public Paddle(int xPosition, int yPosition, int height, int speed, Color color) {
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
-        this.height = height;
-        this.speed = speed;
-        this.color = color;
-
+        super (xPosition, yPosition, height,PADDLE_WIDTH , speed, color);
     }
 
+    @Override
     public void paint(Graphics g) {
         g.setColor(color);
         g.fillRect(xPosition, yPosition, PADDLE_WIDTH, height);
@@ -50,12 +44,12 @@ public class Paddle extends GameObject{
 
     public boolean checkCollision(Ball ball) {
         // Pega a coordenada da borda direita do paddle
-        int xRightCoordinate = this.xPosition + PADDLE_WIDTH;
+        int xRightCoordinate = this.xPosition + this.width;
         // Pega a coordenada da borda inferior do paddle
         int yBottomCoordinate = this.yPosition + this.height;
 
         // Verifica se a coordenada x da bola está sobre o paddle
-        if (ball.getXPosition() > (this.xPosition - ball.getSize()) && ball.getXPosition() < xRightCoordinate) {
+        if (ball.getXPosition() > (this.xPosition - ball.getWidth()) && ball.getXPosition() < xRightCoordinate) {
             // Verifica se a coordenada y da bola está sobre o paddle
             if (ball.getYPosition() > this.yPosition && ball.getYPosition() < yBottomCoordinate) {
                 // Se entrou neste if, é porque há colisão do paddle com a bola
@@ -67,19 +61,11 @@ public class Paddle extends GameObject{
         return false;
     }
 
-    public int getYPosition() {
-        return this.yPosition;
+    public int getSpeed() {
+        return speed;
     }
 
-    public int getWidth() {
-        return PADDLE_WIDTH;
-    }
-
-    public int getHeight() {
-        return this.height;
-    }
-
-    public int getXPosition() {
-        return this.xPosition;
+    public void setYPosition(int yPosition) {
+        this.yPosition = yPosition;
     }
 }

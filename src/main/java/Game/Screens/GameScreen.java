@@ -4,6 +4,7 @@
  */
 package Game.Screens;
 
+import Game.Controllers.PlayerController;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -20,22 +21,23 @@ import System.Utilities.MyKeyListener;
  */
 public class GameScreen extends JPanel {
     static final int WINDOW_WIDTH = 640, WINDOW_HEIGHT = 480;
-    private Ball gameBall;
-    private Paddle gamePaddle1, gamePaddle2;
-    private MyKeyListener keyListener;
+    private final Ball gameBall;
+    private final Paddle gamePaddle1, gamePaddle2;
+    private final PlayerController player2Controller, player1Controller;
 
     public GameScreen(MyKeyListener keyListener) {
         // Instancia os objetos do jogo
-        gameBall = new Ball(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 3, 3, 3, Color.YELLOW, 10);
-        gamePaddle1 = new Paddle(0, 50, 150, 5, Color.yellow);
-        gamePaddle2 = new Paddle((WINDOW_WIDTH - 15), 150, 150, 5, Color.green);
-
-        this.keyListener = keyListener;
+        this.gameBall = new Ball(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 1, 1, 3, Color.YELLOW, 10,WINDOW_WIDTH,WINDOW_HEIGHT);
+        this.gamePaddle1 = new Paddle(0, 50, 150, 5, Color.yellow);
+        this.gamePaddle2 = new Paddle((WINDOW_WIDTH - 15), 150, 150, 5, Color.green);
+        this.player1Controller = new PlayerController(KeyEvent.VK_W,KeyEvent.VK_S,gamePaddle1,keyListener,WINDOW_HEIGHT);
+        this.player2Controller = new PlayerController(KeyEvent.VK_UP,KeyEvent.VK_DOWN,gamePaddle2,keyListener,WINDOW_HEIGHT);
     }
 
     /**
      * Desenha e atualiza todos os gráficos da tela.
      */
+    @Override
     public void paintComponent(Graphics g) {
         // Desenha e preenche o background da tela
         g.setColor(Color.BLACK);
@@ -51,9 +53,11 @@ public class GameScreen extends JPanel {
      * Chamado a cada frame para executar as operações do jogo.
      */
     public void gameLogic() {
-
         // Movimenta a bola
         gameBall.moveBall();
+        
+        //Verifica se a bola saiu da tela e faz ela aparecer novamente
+        gameBall.respawnWhenExitOfScreen();
 
         // Verifica se há colisão da bola com a borda inferior ou superior e aplica a
         // lógica
@@ -64,32 +68,10 @@ public class GameScreen extends JPanel {
             gameBall.reverseXDirection();
         }
 
-        // Paddle 1 ir para cima
-        if (keyListener.isKeyPressed(KeyEvent.VK_UP)) {
-            if ((gamePaddle1.getYPosition() == 0)) {
-            } else {
-                gamePaddle1.moveOnYAxisTo(gamePaddle1.getYPosition() + 1);
-            }
-
-        }
-
-        // Paddle 1 ir para baixo
-        if (keyListener.isKeyPressed(KeyEvent.VK_DOWN)) {
-            gamePaddle1.moveOnYAxisTo(740 - gamePaddle1.getYPosition());
-        }
-
-        // Paddle 2 ir para cima
-        if (keyListener.isKeyPressed(KeyEvent.VK_W)) {
-            if (gamePaddle2.getYPosition() == 0) {
-            } else {
-                gamePaddle2.moveOnYAxisTo(gamePaddle2.getYPosition() + 1);
-            }
-        }
-
-        // Paddle 2 ir para baixo
-        if (keyListener.isKeyPressed(KeyEvent.VK_S)) {
-            gamePaddle2.moveOnYAxisTo(740 - gamePaddle2.getYPosition());
-        }
-
+        //Verifica se há comandos de movimentação para os paddles
+        player1Controller.checkForMoveUpCommand();
+        player1Controller.checkForMoveDownCommand();
+        player2Controller.checkForMoveUpCommand();
+        player2Controller.checkForMoveDownCommand();
     }
 }
