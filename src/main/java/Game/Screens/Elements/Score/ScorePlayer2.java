@@ -8,6 +8,6 @@ package Game.Screens.Elements.Score;
  *
  * @author VPF
  */
-public class ScorePlayer2 extends Score{
+public class ScorePlayer2 {
     //Definindo que a classe ScorePlayer2 faz parte da superclasse Score
 }
