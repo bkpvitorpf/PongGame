@@ -10,5 +10,21 @@ package Game.Screens.Elements.Score;
  * @author VPF
  */
 public class Score {
-    
+    protected int pScore;
+
+    public Score(int pScore) {
+        this.pScore = pScore;
+    }
+
+    public void newScore () {
+        this.pScore ++;
+    }
+
+    public int getPlayerScore() {
+        return pScore;
+    }
+
+    public void setPlayerScore(int playerScore) {
+        this.pScore = playerScore;
+    }
 }

@@ -70,24 +70,31 @@ public class Ball extends GameObject {
     public void reverseXDirection() {
         this.xDirection *= -1;
     }
-    
-    //Isso é logica do jogo, não da bola
-     // Verifica se a bola saiu da tela, caso tenha saído, coloca ela novamente no centro da tela e aleatoriza a direção que ela vai movimentar
-    public void respawnWhenExitOfScreen(){
+
+    //Verifica se a bola saiu da tela
+    public boolean exitOfScreen() {
         if(this.getXPosition() < 0 || this.getXPosition() > this.WINDOW_WIDTH){
-            this.xPosition = this.WINDOW_WIDTH/2;
-            this.yPosition = this.WINDOW_HEIGHT/2;
-            
-            //Aleatoriza  a direção que a bola seguirá
-            
-            // Gera uma matriz pra armazenar todas as opções possíveis de direção
-            int options[][] = {{1,1},{1,-1},{-1,1},{-1,-1}};
-            
-            //Gera o valor true ou false aleatoreamente e armazena numa variável
-            boolean randomBooleanValue = new Random().nextBoolean();
-            
-            this.yDirection = randomBooleanValue ? 1 : -1;
-            this.xDirection = randomBooleanValue ? -1: 1;
+            return true;
         }
+        else return false;
+    }
+    
+    //Caso a bola tenha saído, coloca ela novamente no centro da tela e aleatoriza a direção que ela vai movimentar
+    public void respawnBall(){
+
+        this.xPosition = this.WINDOW_WIDTH/2;
+        this.yPosition = this.WINDOW_HEIGHT/2;
+            
+        //Aleatoriza  a direção que a bola seguirá
+            
+        // Gera uma matriz pra armazenar todas as opções possíveis de direção
+        int options[][] = {{1,1},{1,-1},{-1,1},{-1,-1}};
+            
+        //Gera o valor true ou false aleatoreamente e armazena numa variável
+        boolean randomBooleanValue = new Random().nextBoolean();
+            
+        this.yDirection = randomBooleanValue ? 1 : -1;
+        this.xDirection = randomBooleanValue ? -1: 1;
+
     }
 }

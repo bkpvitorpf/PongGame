@@ -8,7 +8,7 @@ import java.awt.*;
  *
  * @author VPF
  */
-public class GameObject {
+public abstract class GameObject {
     
     protected int xPosition, yPosition, speed, width, height;
     protected Color color;
@@ -41,6 +41,14 @@ public class GameObject {
 
     public int getXPosition() {
         return this.xPosition;
+    }
+    
+    public void setXPosition(int xPosition) {
+        this.xPosition = xPosition;
+    }
+
+    public void setYPosition(int yPosition) {
+        this.yPosition = yPosition;
     }
     
 }

@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JPanel;
 
+import Game.Screens.Elements.Score.Score;
 import Game.Objects.Ball;
 import Game.Objects.Paddle;
 import System.Utilities.MyKeyListener;
@@ -24,6 +25,7 @@ public class GameScreen extends JPanel {
     private final Ball gameBall;
     private final Paddle gamePaddle1, gamePaddle2;
     private final PlayerController player2Controller, player1Controller;
+    private final Score player1, player2;
 
     public GameScreen(MyKeyListener keyListener) {
         // Instancia os objetos do jogo
@@ -32,6 +34,8 @@ public class GameScreen extends JPanel {
         this.gamePaddle2 = new Paddle((WINDOW_WIDTH - 15), 150, 150, 5, Color.green);
         this.player1Controller = new PlayerController(KeyEvent.VK_W,KeyEvent.VK_S,gamePaddle1,keyListener,WINDOW_HEIGHT);
         this.player2Controller = new PlayerController(KeyEvent.VK_UP,KeyEvent.VK_DOWN,gamePaddle2,keyListener,WINDOW_HEIGHT);
+        this.player1 = new Score(0);
+        this.player2 = new Score(0);
     }
 
     /**
@@ -47,6 +51,9 @@ public class GameScreen extends JPanel {
 
         gamePaddle1.paint(g);
         gamePaddle2.paint(g);
+
+        g.setColor(Color.WHITE);
+        g.drawString("SCORE - PLAYER 1 [" + player1.getPlayerScore() + "]  PLAYER 2 ["+ player2.getPlayerScore() + "]", 250, 20);
     }
 
     /**
@@ -56,9 +63,6 @@ public class GameScreen extends JPanel {
         // Movimenta a bola
         gameBall.moveBall();
         
-        //Verifica se a bola saiu da tela e faz ela aparecer novamente
-        gameBall.respawnWhenExitOfScreen();
-
         // Verifica se há colisão da bola com a borda inferior ou superior e aplica a
         // lógica
         gameBall.bounceOnEdges(0, WINDOW_HEIGHT);
@@ -73,5 +77,28 @@ public class GameScreen extends JPanel {
         player1Controller.checkForMoveDownCommand();
         player2Controller.checkForMoveUpCommand();
         player2Controller.checkForMoveDownCommand();
+
+        //Verifica se a bola saiu da tela, ou seja se algum jogador pontuou,
+        // e então incrementa a pontuação do jogador e ajusta as posições dos objetos do jogo
+        if (gameBall.exitOfScreen()) {
+            if (gameBall.getXPosition() > 10) {
+                player1.newScore();
+                reset();
+            }
+            else {
+                player2.newScore();
+                reset();
+            }
+        }
+
+    }
+
+    //Recomeça o jogo com os objetos movidos para as posições iniciais do jogo
+    public void reset() {
+        gameBall.respawnBall();
+        gamePaddle1.setXPosition(0);
+        gamePaddle1.setYPosition(50);
+        gamePaddle2.setXPosition(WINDOW_WIDTH - 15);
+        gamePaddle2.setYPosition(150);
     }
 }
