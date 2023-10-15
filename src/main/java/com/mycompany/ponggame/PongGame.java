@@ -3,33 +3,36 @@ package com.mycompany.ponggame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import Game.Screens.GameScreen;
-import System.Utilities.MyKeyListener;
 import System.Screens.OSWindow;
+import System.Utilities.MyKeyListener;
 
 public class PongGame {
     static final int WINDOW_WIDTH = 640, WINDOW_HEIGHT = 480;
     // declare and initialize the frame
     static MyKeyListener keyListener = new MyKeyListener();
-    static OSWindow myWindow = new OSWindow("Pong++;",WINDOW_WIDTH,WINDOW_HEIGHT);
+    static OSWindow myWindow = new OSWindow("Pong++;", WINDOW_WIDTH, WINDOW_HEIGHT);
 
     public static void main(String[] args) {
         // Adiciona um keyListener para capturar o input do usuário
         myWindow.addKeyListener(keyListener);
 
         // Cria o painel do jogo no frame
-        GameScreen game = new GameScreen(keyListener);
+        GameScreen game = new GameScreen(keyListener, myWindow);
+        // EndScreen end = new EndScreen("teste");
 
         // add the game to the JFrame
         myWindow.add(game);
-        
+        // myWindow.add(end);
+
         System.out.println(myWindow.toString());
 
         // show the window
         myWindow.setVisible(true);
-        
+
         // make a new Timer
         Timer timer = new Timer(25, new ActionListener() {
             @Override
@@ -43,7 +46,7 @@ public class PongGame {
         });
 
         timer.start();
-        
+
     }
-    
+
 }

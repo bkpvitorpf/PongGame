@@ -5,6 +5,7 @@
 package Game.Screens;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
@@ -14,6 +15,7 @@ import Game.Controllers.PlayerController;
 import Game.Objects.Ball;
 import Game.Objects.Paddle;
 import Game.Screens.Elements.Score.Score;
+import System.Screens.OSWindow;
 import System.Utilities.MyKeyListener;
 
 /**
@@ -26,8 +28,10 @@ public class GameScreen extends JPanel {
     private final Paddle gamePaddle1, gamePaddle2;
     private final PlayerController player2Controller, player1Controller;
     private final Score player1, player2;
+    private OSWindow myWindow;
+    private EndScreen endScreen;
 
-    public GameScreen(MyKeyListener keyListener) {
+    public GameScreen(MyKeyListener keyListener, OSWindow myWindow) {
         // Instancia os objetos do jogo
         this.gameBall = new Ball(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 1, 1, 3, Color.YELLOW, 10, WINDOW_WIDTH,
                 WINDOW_HEIGHT);
@@ -39,6 +43,8 @@ public class GameScreen extends JPanel {
                 WINDOW_HEIGHT);
         this.player1 = new Score(0);
         this.player2 = new Score(0);
+
+        this.myWindow = myWindow;
     }
 
     /**
@@ -55,9 +61,12 @@ public class GameScreen extends JPanel {
         gamePaddle1.paint(g);
         gamePaddle2.paint(g);
 
+        Font font = new Font("Verdana", Font.BOLD, 16);
+
+        g.setFont(font);
         g.setColor(Color.WHITE);
         g.drawString("SCORE - PLAYER 1 [" + player1.getPlayerScore() + "]  PLAYER 2 [" + player2.getPlayerScore() + "]",
-                250, 20);
+                17, 20);
     }
 
     /**
@@ -89,8 +98,26 @@ public class GameScreen extends JPanel {
         if (gameBall.exitOfScreen()) {
             if (gameBall.getXPosition() > 10) {
                 player1.newScore();
+
+                if (player1.isPlayerWinner()) {
+                    // Caso o jogador 1 possua pontuação 5
+                    EndScreen endScreen = new EndScreen("Jogador 1 Ganhou!");
+                    myWindow.removeAll();
+
+                    myWindow.add(endScreen);
+                    endScreen.repaint();
+                }
             } else {
                 player2.newScore();
+
+                if (player2.isPlayerWinner()) {
+                    // Caso o jogador 2 possua pontuação de 5
+                    EndScreen endScreen = new EndScreen("Jogador 2 Ganhou!");
+                    myWindow.removeAll();
+                    endScreen.setVisible(true);
+                    myWindow.add(endScreen);
+                    endScreen.repaint();
+                }
             }
 
             gameBall.respawn();
