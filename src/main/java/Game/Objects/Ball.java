@@ -95,9 +95,9 @@ public class Ball extends GameObject {
         int respawnOptions[][] = { { 1, 1 }, { 1, -1 }, { -1, 1 }, { -1, -1 } };
 
         // Gera o valor true ou false aleatoreamente e armazena numa variável
-        boolean randomBooleanValue = new Random().nextBoolean();
+        int randomNumber = new Random().nextInt(4);
 
-        this.yDirection = randomBooleanValue ? 1 : -1;
-        this.xDirection = randomBooleanValue ? -1 : 1;
+        this.yDirection = respawnOptions[randomNumber][0];
+        this.xDirection = respawnOptions[randomNumber][1];
     }
 }
