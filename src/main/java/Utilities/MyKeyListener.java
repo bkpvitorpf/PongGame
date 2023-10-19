@@ -1,4 +1,4 @@
-package System.Utilities;
+package Utilities;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

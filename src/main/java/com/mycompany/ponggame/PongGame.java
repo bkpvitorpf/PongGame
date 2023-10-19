@@ -6,9 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import Game.Screens.GameScreen;
-import System.Screens.OSWindow;
-import System.Utilities.MyKeyListener;
+import Screens.GameScreen;
+import Screens.OSWindow;
+import Utilities.MyKeyListener;
 
 public class PongGame {
     static final int WINDOW_WIDTH = 640, WINDOW_HEIGHT = 480;

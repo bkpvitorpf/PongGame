@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Game.Screens;
+package Screens;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -11,12 +11,12 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JPanel;
 
-import Game.Controllers.PlayerController;
-import Game.Objects.Ball;
-import Game.Objects.Paddle;
-import Game.Screens.Elements.Score.Score;
-import System.Screens.OSWindow;
-import System.Utilities.MyKeyListener;
+import Controllers.PlayerController;
+import Objects.Ball;
+import Objects.Racket;
+import Objects.Score;
+import Screens.OSWindow;
+import Utilities.MyKeyListener;
 
 /**
  *
@@ -24,23 +24,21 @@ import System.Utilities.MyKeyListener;
  */
 public class GameScreen extends JPanel {
     static final int WINDOW_WIDTH = 640, WINDOW_HEIGHT = 480;
-    private final Ball gameBall;
-    private final Paddle gamePaddle1, gamePaddle2;
-    private final PlayerController player2Controller, player1Controller;
-    private final Score player1, player2;
+    private final Ball ball;
+    private final Racket racket1, racket2;
+    private final PlayerController racket1Controller, racket2Controller;
+    private Score player1, player2;
     private OSWindow myWindow;
     private EndScreen endScreen;
 
     public GameScreen(MyKeyListener keyListener, OSWindow myWindow) {
         // Instancia os objetos do jogo
-        this.gameBall = new Ball(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 1, 1, 3, Color.YELLOW, 10, WINDOW_WIDTH,
-                WINDOW_HEIGHT);
-        this.gamePaddle1 = new Paddle(0, 50, 150, 5, Color.yellow);
-        this.gamePaddle2 = new Paddle((WINDOW_WIDTH - 15), 150, 150, 5, Color.green);
-        this.player1Controller = new PlayerController(KeyEvent.VK_W, KeyEvent.VK_S, gamePaddle1, keyListener,
-                WINDOW_HEIGHT);
-        this.player2Controller = new PlayerController(KeyEvent.VK_UP, KeyEvent.VK_DOWN, gamePaddle2, keyListener,
-                WINDOW_HEIGHT);
+        this.ball = new Ball(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 1, 1, 3, Color.YELLOW, 10, WINDOW_WIDTH, WINDOW_HEIGHT);
+        this.racket1 = new Racket(0, 50, 150, 5, Color.yellow);
+        this.racket2 = new Racket((WINDOW_WIDTH - 15), 150, 150, 5, Color.green);
+        this.racket1Controller = new PlayerController(KeyEvent.VK_W, KeyEvent.VK_S, racket1, keyListener, WINDOW_HEIGHT);
+        this.racket2Controller = new PlayerController(KeyEvent.VK_UP, KeyEvent.VK_DOWN, racket2, keyListener, WINDOW_HEIGHT);
+        
         this.player1 = new Score(0);
         this.player2 = new Score(0);
 
@@ -56,10 +54,10 @@ public class GameScreen extends JPanel {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-        gameBall.paint(g);
+        ball.paint(g);
 
-        gamePaddle1.paint(g);
-        gamePaddle2.paint(g);
+        racket1.paint(g);
+        racket2.paint(g);
 
         Font font = new Font("Verdana", Font.BOLD, 16);
 
@@ -74,29 +72,29 @@ public class GameScreen extends JPanel {
      */
     public void gameLogic() {
         // Movimenta a bola
-        gameBall.moveBall();
+        ball.move(ball.getSpeed());
 
         // Verifica se há colisão da bola com a borda inferior ou superior e aplica a
         // lógica
-        gameBall.bounceOnEdges(0, WINDOW_HEIGHT);
+        ball.bounceOnEdges(0, WINDOW_HEIGHT);
 
         // Verifica se há colisão dos paddles com a bola
-        if (gamePaddle1.checkCollision(gameBall) || gamePaddle2.checkCollision(gameBall)) {
-            gameBall.reverseXDirection();
+        if (racket1.checkCollisionWithTheBall(ball) || racket2.checkCollisionWithTheBall(ball)) {
+            ball.reverseXDirection();
         }
 
         // Verifica se há comandos de movimentação para os paddles
-        player1Controller.checkForMoveUpCommand();
-        player1Controller.checkForMoveDownCommand();
-        player2Controller.checkForMoveUpCommand();
-        player2Controller.checkForMoveDownCommand();
+        racket1Controller.checkForMoveUpCommand();
+        racket1Controller.checkForMoveDownCommand();
+        racket2Controller.checkForMoveUpCommand();
+        racket2Controller.checkForMoveDownCommand();
 
         /*
          * Verifica se a bola saiu da tela, ou seja se algum jogador pontuou,
          * e então incrementa a pontuação do jogador e redefine a posição da bola
          */
-        if (gameBall.exitOfScreen()) {
-            if (gameBall.getXPosition() > 10) {
+        if (ball.exitOfScreen()) {
+            if (ball.getXPosition() > 10) {
                 player1.newScore();
 
                 if (player1.isPlayerWinner()) {
@@ -120,7 +118,7 @@ public class GameScreen extends JPanel {
                 }
             }
 
-            gameBall.respawn();
+            ball.respawnWhenExitOfScreen();
         }
     }
 }
