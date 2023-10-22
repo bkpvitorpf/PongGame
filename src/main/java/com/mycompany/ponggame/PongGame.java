@@ -2,10 +2,7 @@ package com.mycompany.ponggame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JPanel;
 import javax.swing.Timer;
-
 import Screens.GameScreen;
 import Screens.OSWindow;
 import Utilities.MyKeyListener;
@@ -21,7 +18,7 @@ public class PongGame {
         myWindow.addKeyListener(keyListener);
 
         // Cria o painel do jogo no frame
-        GameScreen game = new GameScreen(keyListener, myWindow);
+        GameScreen game = new GameScreen(keyListener);
         // EndScreen end = new EndScreen("teste");
 
         // add the game to the JFrame
@@ -38,7 +35,7 @@ public class PongGame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // game logic
-                game.gameLogic();
+                game.runGame();
 
                 // repaint the screen
                 game.repaint();

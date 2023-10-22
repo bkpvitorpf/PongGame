@@ -10,9 +10,8 @@ import java.awt.*;
  */
 public abstract class GameObject {
     
-    protected int xPosition, yPosition, width, height;
-    protected Color color;
-    
+    public int xPosition, yPosition, width, height;
+    public Color color;
     
     public GameObject (int xPosition, int yPosition, int height, int width, Color color) {
         this.xPosition = xPosition;
@@ -22,7 +21,7 @@ public abstract class GameObject {
         this.color = color;
     }
     
-    public abstract void move(int stepSize);
+    public abstract void move();
     
     public void paint(Graphics g){};
 
@@ -64,24 +63,5 @@ public abstract class GameObject {
 
     public void setColor(Color color) {
         this.color = color;
-    }
-    
-    public boolean checkCollisionWithTheBall(Ball ball) {
-        // Pega a coordenada da borda direita do objeto
-        int RightSideCoordinate = this.xPosition + this.width;
-        // Pega a coordenada da borda inferior do objeto
-        int BottomCoordinate = this.yPosition + this.height;
-
-        // Verifica se a coordenada x da bola está sobre o objeto
-        if (ball.getXPosition() > (this.xPosition - ball.getWidth()) && ball.getXPosition() < RightSideCoordinate) {
-            // Verifica se a coordenada y da bola está sobre o objeto
-            if (ball.getYPosition() > this.yPosition && ball.getYPosition() < BottomCoordinate) {
-                // Se entrou neste if, é porque há colisão com a bola
-                return true;
-            }
-        }
-
-        // Caso não haja colisão, retorna falso
-        return false;
     }
 }

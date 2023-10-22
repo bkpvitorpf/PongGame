@@ -35,7 +35,7 @@ public class Wall extends GameObject{
     }
     
     @Override
-    public void move(int stepSize){};
+    public void move(){};
     
     public void destroyWall(){
         

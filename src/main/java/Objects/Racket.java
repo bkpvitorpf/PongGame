@@ -30,21 +30,21 @@ public class Racket extends GameObject{
     }
     
     @Override
-    public void move(int yAxisDesiredPosition) {
-            // Obtém a posição y do centro do paddle
-            int yPaddleCenterPosition = this.yPosition + this.height / 2;
-
-            // Determina se o paddle deve ir ou não para a posição informada, ele só
-            // irá se a posição y do centro do paddle for diferente da posição y informada
-            if (Math.abs(yPaddleCenterPosition - yAxisDesiredPosition) > this.step) {
-                // Verifica se o centro do paddle está abaixo da posição y da bola
-                if (yPaddleCenterPosition < yAxisDesiredPosition) {
-                    this.yPosition += this.step;
-                }
-                // Verifica se o centro do paddle está acima da posição y da bola
-                if (yPaddleCenterPosition > yAxisDesiredPosition) {
-                    this.yPosition -= this.step;
-                }
-            }
+    public void move() {
+//            // Obtém a posição y do centro do paddle
+//            int yPaddleCenterPosition = this.yPosition + this.height / 2;
+//
+//            // Determina se o paddle deve ir ou não para a posição informada, ele só
+//            // irá se a posição y do centro do paddle for diferente da posição y informada
+//            if (Math.abs(yPaddleCenterPosition - yAxisDesiredPosition) > this.step) {
+//                // Verifica se o centro do paddle está abaixo da posição y da bola
+//                if (yPaddleCenterPosition < yAxisDesiredPosition) {
+//                    this.yPosition += this.step;
+//                }
+//                // Verifica se o centro do paddle está acima da posição y da bola
+//                if (yPaddleCenterPosition > yAxisDesiredPosition) {
+//                    this.yPosition -= this.step;
+//                }
+//            }
     }
 }

@@ -11,7 +11,13 @@ import java.util.Random;
  * @author VPF
  */
 public class Ball extends GameObject {
-    public int xDirection, yDirection, WINDOW_WIDTH,WINDOW_HEIGHT, speed;
+
+    private int xDirection, yDirection;
+    private final int WINDOW_WIDTH;
+    private final int WINDOW_HEIGHT;
+    // Definindo a classe GameObject como superclasse da classe Ball
+    // ball constructor assigns values to instance variables
+    private final int speed;
     // Definindo a classe GameObject como superclasse da classe Ball
     // ball constructor assigns values to instance variables
     
@@ -45,9 +51,9 @@ public class Ball extends GameObject {
     // Faz a bola avançar uma determinada quantidade de unidades numa determinada
     // direção
     @Override
-    public void move(int stepSize) {
-        this.xPosition += (stepSize*this.xDirection);
-        this.yPosition += (stepSize*this.yDirection);
+    public void move() {
+        this.xPosition += (this.speed*this.xDirection);
+        this.yPosition += (this.speed*this.yDirection);
     }
     
 //Isso é lógica do jogo, não da bola
@@ -64,8 +70,24 @@ public class Ball extends GameObject {
         }
     }
 
+    public int getxDirection() {
+        return xDirection;
+    }
+
+    public void setxDirection(int xDirection) {
+        this.xDirection = xDirection;
+    }
+
+    public int getyDirection() {
+        return yDirection;
+    }
+
+    public void setyDirection(int yDirection) {
+        this.yDirection = yDirection;
+    }
+
     // Inverte o sentido e muda a direção da bola
-    private void reverseYDirection() {
+    public void reverseYDirection() {
         this.yDirection *= -1;
     }
 
@@ -75,29 +97,5 @@ public class Ball extends GameObject {
     
     public int getSpeed(){
         return this.speed;
-    }
-    
-    public boolean exitOfScreen() {
-        return this.getXPosition() < 0 || this.getXPosition() > this.WINDOW_WIDTH;
-    }
-    
-    //Isso é logica do jogo, não da bola
-     // Verifica se a bola saiu da tela, caso tenha saído, coloca ela novamente no centro da tela e aleatoriza a direção que ela vai movimentar
-    public void respawnWhenExitOfScreen(){
-        if(this.getXPosition() < 0 || this.getXPosition() > this.WINDOW_WIDTH){
-            this.xPosition = this.WINDOW_WIDTH/2;
-            this.yPosition = this.WINDOW_HEIGHT/2;
-            
-            //Aleatoriza  a direção que a bola seguirá
-            
-            // Gera uma matriz pra armazenar todas as opções possíveis de direção
-            int options[][] = {{1,1},{1,-1},{-1,1},{-1,-1}};
-            
-            //Gera o valor true ou false aleatoreamente e armazena numa variável
-            boolean randomBooleanValue = new Random().nextBoolean();
-            
-            this.yDirection = randomBooleanValue ? 1 : -1;
-            this.xDirection = randomBooleanValue ? -1: 1;
-        }
-    }
+    } 
 }

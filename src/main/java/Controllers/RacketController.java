@@ -3,12 +3,12 @@ package Controllers;
 import Objects.Racket;
 import Utilities.MyKeyListener;
 
-public class PlayerController {
+public class RacketController {
     final private Racket racket;
     final private int keyUp,keyDown, WINDOW_HEIGHT;
     final private MyKeyListener listener;
     
-    public PlayerController(int keyUp,int keyDown,Racket racket,MyKeyListener listener,int WINDOW_HEIGHT){
+    public RacketController(int keyUp,int keyDown,Racket racket,MyKeyListener listener,int WINDOW_HEIGHT){
         this.racket = racket;
         this.keyUp = keyUp;
         this.keyDown = keyDown;
