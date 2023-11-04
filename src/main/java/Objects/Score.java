@@ -1,5 +1,9 @@
 package Objects;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -9,30 +13,31 @@ package Objects;
  *
  * @author VPF
  */
-public class Score {
-    protected int pScore;
+public class Score extends GameObject {
+    private int value;
+    private final String text;
 
-    public Score(int pScore) {
-        this.pScore = pScore;
+    public Score(String text, int xPosition, int yPosition, int value, Color color) {
+        super(xPosition, yPosition, 0, 0, color);
+        this.value = value;
+        this.text = text;
     }
-
-    public void newScore () {
-        this.pScore ++;
-    }
-
-    public int getPlayerScore() {
-        return pScore;
-    }
-
-    public void setPlayerScore(int playerScore) {
-        this.pScore = playerScore;
-    }
-
     
-    /*Verifica se o jogador atingiu a pontuação de vitória.
-    *Vai retornar TRUE se o jogador atingir(ou ultrapassar) 5 pontos. Caso contrario, retorna FALSE.
-    */
-    public boolean isPlayerWinner(){
-        return pScore >= 2;
-    }
+    public int getValue(){
+        return this.value;
+    };
+    
+    public void setScore(int newValue){
+        this.value = newValue;
+    };
+    
+    @Override
+    public void paint(Graphics g){
+        Font font = new Font("Verdana", Font.BOLD, 16);
+
+        g.setFont(font);
+        g.setColor(this.color);
+        
+        g.drawString(this.text + " [ " +this.value+" ]", this.xPosition, this.yPosition);
+    };
 }

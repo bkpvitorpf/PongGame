@@ -4,7 +4,6 @@
  */
 package Objects;
 
-import static Objects.Racket.PADDLE_WIDTH;
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -13,6 +12,7 @@ import java.awt.Graphics;
  * @author VPF
  */
 public class Wall extends GameObject{
+    static final int WALL_WIDTH = 15;
     private int life;
     
     public Wall(int xPosition, int yPosition, int height, int width,Color color, int life) {
@@ -23,7 +23,7 @@ public class Wall extends GameObject{
     @Override
     public void paint(Graphics g) {
         g.setColor(color);
-        g.fillRect(xPosition, yPosition, PADDLE_WIDTH, height);
+        g.fillRect(xPosition, yPosition, WALL_WIDTH, height);
     }
 
     public int getLife() {
@@ -32,12 +32,5 @@ public class Wall extends GameObject{
 
     public void setLife(int life) {
         this.life = life;
-    }
-    
-    @Override
-    public void move(){};
-    
-    public void destroyWall(){
-        
     }
 }

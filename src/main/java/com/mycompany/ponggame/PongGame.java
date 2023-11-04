@@ -1,10 +1,11 @@
 package com.mycompany.ponggame;
 
+import Controllers.PanelController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
-import Screens.GameScreen;
-import Screens.OSWindow;
+import Panels.GamePanel;
+import Panels.OSWindow;
 import Utilities.MyKeyListener;
 
 public class PongGame {
@@ -12,20 +13,23 @@ public class PongGame {
     // declare and initialize the frame
     static MyKeyListener keyListener = new MyKeyListener();
     static OSWindow myWindow = new OSWindow("Pong++;", WINDOW_WIDTH, WINDOW_HEIGHT);
+    static PanelController panelController = new PanelController(keyListener);
 
     public static void main(String[] args) {
         // Adiciona um keyListener para capturar o input do usuário
         myWindow.addKeyListener(keyListener);
 
         // Cria o painel do jogo no frame
-        GameScreen game = new GameScreen(keyListener);
+        //GamePanel game = new GamePanel(keyListener);
         // EndScreen end = new EndScreen("teste");
 
         // add the game to the JFrame
-        myWindow.add(game);
+        //myWindow.add(game);
         // myWindow.add(end);
 
-        System.out.println(myWindow.toString());
+        //System.out.println(myWindow.toString());
+        
+        //myWindow.add(panelController.);
 
         // show the window
         myWindow.setVisible(true);
@@ -35,10 +39,10 @@ public class PongGame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // game logic
-                game.runGame();
+          //      game.runGame();
 
                 // repaint the screen
-                game.repaint();
+            //    game.repaint();
             }
         });
 

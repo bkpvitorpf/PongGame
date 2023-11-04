@@ -18,13 +18,13 @@ public class RacketController {
 
     public void checkForMoveUpCommand(){
         if(this.listener.isKeyPressed(keyUp) && this.racket.getYPosition() > 0){
-            this.racket.setYPosition(this.racket.getYPosition() - this.racket.getStep());
+            this.racket.moveUp();
         }
     }
     
     public void checkForMoveDownCommand(){
         if(this.listener.isKeyPressed(keyDown) && this.racket.getYPosition() + this.racket.getHeight() < WINDOW_HEIGHT){
-            this.racket.setYPosition(this.racket.getYPosition() + this.racket.getStep());
+            this.racket.moveDown();
         }
     }
 }

@@ -7,6 +7,7 @@ package Controllers;
 import Objects.Ball;
 import Objects.GameObject;
 import Objects.Racket;
+import Objects.Score;
 import Utilities.MyKeyListener;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -20,17 +21,22 @@ import java.util.Random;
  * @author Vitor
  */
 public class GameController {
-    static final int WINDOW_WIDTH = 640, WINDOW_HEIGHT = 480;
-    private List<Racket> rackets = new ArrayList();
-    private List<RacketController> racketControllers = new ArrayList();
+    final int WINDOW_WIDTH = 640, WINDOW_HEIGHT = 480;
+    private final List<Racket> rackets = new ArrayList();
+    private final List<RacketController> racketControllers = new ArrayList();
+    private final List<Score> scores = new ArrayList();
     private final Ball ball;
+    private int speedCounter=0;
+    private final int maxSpeedCounter = 5;
     
     public GameController(MyKeyListener keyListener){
-        this.ball = new Ball(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 1, 1, 3, Color.YELLOW, 10, WINDOW_WIDTH, WINDOW_HEIGHT);
+        this.ball = new Ball(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 1, 1, 3, Color.blue, 10, WINDOW_WIDTH, WINDOW_HEIGHT);
         this.rackets.add(new Racket(0, 50, 150, 5, Color.yellow));
         this.rackets.add(new Racket((WINDOW_WIDTH - 15), 150, 150, 5, Color.green));
         this.racketControllers.add(new RacketController(KeyEvent.VK_W, KeyEvent.VK_S, rackets.get(0), keyListener, WINDOW_HEIGHT));
         this.racketControllers.add(new RacketController(KeyEvent.VK_UP, KeyEvent.VK_DOWN, rackets.get(1), keyListener, WINDOW_HEIGHT));
+        this.scores.add(new Score("Player 1 - ",WINDOW_WIDTH/4 - 15,50,0,Color.yellow));
+        this.scores.add(new Score("Player 2 - ",WINDOW_WIDTH/4 -15 + 225,50,0,Color.green));
     }
     
     public void showObjectsOnScreen(Graphics g){
@@ -39,12 +45,18 @@ public class GameController {
         for(int racketCounter=0; racketCounter < rackets.size(); racketCounter++){
             rackets.get(racketCounter).paint(g);
         }
+        
+        for(int scoreCounter=0; scoreCounter < scores.size(); scoreCounter++){
+            scores.get(scoreCounter).paint(g);
+        }
     }
 
     public void runGameLogic(){
         //Movimentação
         
             ball.move();
+            
+            //System.out.println("Criou" + ball.getObjectsCount());
 
             // Inicializando os controladores das raquetes
             for(int racketControllersCounter=0; racketControllersCounter < racketControllers.size(); racketControllersCounter++){
@@ -58,22 +70,25 @@ public class GameController {
         
             // Verificando a colisão da bola com as raquetes
             for(int racketCounter=0; racketCounter < rackets.size(); racketCounter++){
-                if(this.checkCollisionOfElementWithTheBall(rackets.get(racketCounter), ball)){
+                if(this.checkCollisionOfAnElementWithTheBall(rackets.get(racketCounter), ball)){
                     ball.reverseXDirection();
                 }
             }
             
+            //Verifica qual player marcou o ponto
+            this.checkForScore();
+            
             this.respawnBallWhenItExitOfScreen();
-        //Verifica qual player marcou o ponto
     }
     
     private void makeBallBounceOnEdges(){
         if (ball.getYPosition() > (WINDOW_HEIGHT - ball.getWidth()) || ball.getYPosition() < 0) {
             ball.reverseYDirection();
+            this.increaseBallSpeed();
         }
     };
     
-    private boolean checkCollisionOfElementWithTheBall(GameObject object,Ball ball) {
+    private boolean checkCollisionOfAnElementWithTheBall(GameObject object,Ball ball) {
         // Pega a coordenada da borda direita do objeto
         int RightSideCoordinate = object.xPosition + object.width;
         // Pega a coordenada da borda inferior do objeto
@@ -84,6 +99,7 @@ public class GameController {
             // Verifica se a coordenada y da bola está sobre o objeto
             if (ball.getYPosition() > object.yPosition && ball.getYPosition() < BottomCoordinate) {
                 // Se entrou neste if, é porque há colisão com a bola
+                this.increaseBallSpeed();
                 return true;
             }
         }
@@ -92,16 +108,12 @@ public class GameController {
         return false;
     }
     
-    private boolean checkIfBallExitOfScreen(){
+    private boolean checkWetherBallHasLeftScreen(){
         return ball.getXPosition() < 0 || ball.getXPosition() > WINDOW_WIDTH;
     };
-    
-    private void incrementScore(){
         
-    };
-    
     private void respawnBallWhenItExitOfScreen(){
-        if(this.checkIfBallExitOfScreen()){
+        if(this.checkWetherBallHasLeftScreen()){
             //Faz a bola aparecer no centro da tela
             ball.setXPosition(WINDOW_WIDTH/2);
             ball.setYPosition(WINDOW_HEIGHT/2);
@@ -116,6 +128,35 @@ public class GameController {
             
             ball.setxDirection(respawnOptions[randomArrayIndex][0]);
             ball.setxDirection(respawnOptions[randomArrayIndex][1]);
+            ball.setSpeed(3);
+            this.speedCounter=0;
         }
     };
+    
+    private void increaseBallSpeed(){
+        if(this.speedCounter < this.maxSpeedCounter){
+            ball.setSpeed(ball.getSpeed() + 1);
+            this.speedCounter++;
+        }
+    }
+    
+    private void increasePlayer1Score(){
+        scores.get(0).setScore(scores.get(0).getValue() + 1);
+        scores.get(0).update();
+        System.out.println("Score" + scores.get(0).getValue());
+    };
+    
+    private void increasePlayer2Score(){
+        scores.get(1).setScore(scores.get(1).getValue() + 1);
+    };
+    
+    private void checkForScore(){
+        if(this.checkWetherBallHasLeftScreen()){
+            if(this.ball.getXPosition() > WINDOW_WIDTH){
+                this.increasePlayer1Score();
+            }else if(this.ball.getXPosition() < 0){
+                this.increasePlayer2Score();
+            }
+        }
+    }
 }

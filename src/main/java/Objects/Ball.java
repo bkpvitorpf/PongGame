@@ -17,7 +17,7 @@ public class Ball extends GameObject {
     private final int WINDOW_HEIGHT;
     // Definindo a classe GameObject como superclasse da classe Ball
     // ball constructor assigns values to instance variables
-    private final int speed;
+    private float speed;
     // Definindo a classe GameObject como superclasse da classe Ball
     // ball constructor assigns values to instance variables
     
@@ -50,7 +50,6 @@ public class Ball extends GameObject {
 
     // Faz a bola avançar uma determinada quantidade de unidades numa determinada
     // direção
-    @Override
     public void move() {
         this.xPosition += (this.speed*this.xDirection);
         this.yPosition += (this.speed*this.yDirection);
@@ -95,7 +94,11 @@ public class Ball extends GameObject {
         this.xDirection *= -1;
     }
     
-    public int getSpeed(){
+    public float getSpeed(){
         return this.speed;
+    } 
+    
+    public void setSpeed(float newSpeed){
+        this.speed = newSpeed;
     } 
 }

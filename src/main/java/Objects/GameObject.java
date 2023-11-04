@@ -4,12 +4,13 @@
  */
 package Objects;
 import java.awt.*;
+import javax.swing.JPanel;
 /**
  *
  * @author VPF
  */
-public abstract class GameObject {
-    
+public class GameObject extends JPanel {
+    private static int objectsCount = 0;
     public int xPosition, yPosition, width, height;
     public Color color;
     
@@ -19,11 +20,16 @@ public abstract class GameObject {
         this.height = height;
         this.width = width;
         this.color = color;
+        
+        GameObject.objectsCount ++;
     }
-    
-    public abstract void move();
-    
+        
+    @Override
     public void paint(Graphics g){};
+    
+    public void update(){
+        repaint();
+    };
 
     public int getXPosition() {
         return xPosition;
@@ -64,4 +70,8 @@ public abstract class GameObject {
     public void setColor(Color color) {
         this.color = color;
     }
+    
+    public int getObjectsCount(){
+        return GameObject.objectsCount;
+    };
 }

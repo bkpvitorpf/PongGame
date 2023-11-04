@@ -4,6 +4,8 @@
  */
 package Objects;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 /**
  *
  * @author VPF
@@ -11,25 +13,36 @@ import java.awt.*;
 public class Racket extends GameObject{
     // Definindo a classe GameObject como superclasse da classe Paddle
     //declaração das variaveis
-    static final int PADDLE_WIDTH = 15;
+    static final int RACKET_WIDTH = 15;
     private int step;
     
     public Racket(int xPosition, int yPosition, int height, int step, Color color) {
-        super (xPosition, yPosition, height,PADDLE_WIDTH , color);
+        super (xPosition, yPosition, height,RACKET_WIDTH , color);
         this.step = step;
     }
     
-    public int getStep(){
-        return this.step;
-    }
-
     @Override
     public void paint(Graphics g) {
         g.setColor(color);
-        g.fillRect(xPosition, yPosition, PADDLE_WIDTH, height);
+        g.fillRect(xPosition, yPosition, RACKET_WIDTH, height);
+    }
+
+    public int getStep() {
+        return step;
+    }
+
+    public void setStep(int step) {
+        this.step = step;
     }
     
-    @Override
+    public void moveUp(){
+        this.setYPosition(this.getYPosition() - this.getStep());
+    };
+    
+    public void moveDown(){
+        this.setYPosition(this.getYPosition() + this.getStep());
+    };
+    
     public void move() {
 //            // Obtém a posição y do centro do paddle
 //            int yPaddleCenterPosition = this.yPosition + this.height / 2;
