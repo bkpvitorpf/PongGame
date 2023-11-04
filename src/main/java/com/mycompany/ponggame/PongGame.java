@@ -10,44 +10,9 @@ import Utilities.MyKeyListener;
 
 public class PongGame {
     static final int WINDOW_WIDTH = 640, WINDOW_HEIGHT = 480;
-    // declare and initialize the frame
-    static MyKeyListener keyListener = new MyKeyListener();
     static OSWindow myWindow = new OSWindow("Pong++;", WINDOW_WIDTH, WINDOW_HEIGHT);
-    static PanelController panelController = new PanelController(keyListener);
 
     public static void main(String[] args) {
-        // Adiciona um keyListener para capturar o input do usuário
-        myWindow.addKeyListener(keyListener);
-
-        // Cria o painel do jogo no frame
-        //GamePanel game = new GamePanel(keyListener);
-        // EndScreen end = new EndScreen("teste");
-
-        // add the game to the JFrame
-        //myWindow.add(game);
-        // myWindow.add(end);
-
-        //System.out.println(myWindow.toString());
-        
-        //myWindow.add(panelController.);
-
-        // show the window
-        myWindow.setVisible(true);
-
-        // make a new Timer
-        Timer timer = new Timer(25, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // game logic
-          //      game.runGame();
-
-                // repaint the screen
-            //    game.repaint();
-            }
-        });
-
-        timer.start();
-
+        //myWindow.startGame();
     }
-
 }

@@ -143,7 +143,6 @@ public class GameController {
     private void increasePlayer1Score(){
         scores.get(0).setScore(scores.get(0).getValue() + 1);
         scores.get(0).update();
-        System.out.println("Score" + scores.get(0).getValue());
     };
     
     private void increasePlayer2Score(){

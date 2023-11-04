@@ -16,28 +16,29 @@ import javax.swing.JPanel;
  * @author VPF
  */
 public class PanelController {
-    private final Panel startPanel, gamePanel, endPanel, currentPanel;
-    private JPanel panels;
+    private GamePanel gamePanel;
+    private final Panel startPanel, endPanel, currentPanel;
     private CardLayout cards;
+    private JPanel mainPanel;
 
-    public PanelController(MyKeyListener keyListener) {
+    public PanelController(CardLayout cards, JPanel mainPanel , MyKeyListener keyListener) {
         this.gamePanel = new GamePanel(keyListener);
         this.startPanel = new StartPanel();
         this.endPanel = new EndPanel();
-        this.cards =  new CardLayout();
         this.currentPanel = this.startPanel;
+        this.cards = cards;
+        this.mainPanel = mainPanel;
         
-        panels.setLayout(cards);
-        
-        panels.add(gamePanel, "Game");
-        panels.add(startPanel,"Start");
+        this.mainPanel.add(gamePanel, "Game");
+        this.mainPanel.add(startPanel,"Start");
+        this.cards.show(mainPanel,"Start");
     }
     
-    public void switchToPanel(Panel destinyPanel){
-        this.cards.show(destinyPanel, destinyPanel.getName());
-    };
-    
-    public void showCurrentPanel(){
-        this.cards.next(currentPanel);
+    public void switchToPanel(String destinyPanel){
+        this.cards.show(this.mainPanel, destinyPanel);
+        
+        if("Game".equals(destinyPanel)){
+            this.gamePanel.runGame();
+        }
     };
 }

@@ -8,6 +8,9 @@ import Controllers.GameController;
 import java.awt.Color;
 import java.awt.Graphics;
 import Utilities.MyKeyListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
 
 /**
  *
@@ -41,6 +44,19 @@ public class GamePanel extends Panel {
      * Executar as operações do jogo. Deve ser chamado continuamente
      */
     public void runGame() {
-        this.gameController.runGameLogic();
+        // make a new Timer
+        Timer timer = new Timer(25, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // game logic
+                gameController.runGameLogic();
+
+                // repaint the screen
+                repaint();
+            //    game.repaint();
+            }
+        });
+
+        timer.start();
     }
 }

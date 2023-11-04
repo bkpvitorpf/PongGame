@@ -6,7 +6,9 @@ package Panels;
 
 import Controllers.PanelController;
 import Utilities.MyKeyListener;
+import java.awt.CardLayout;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 /**
@@ -15,20 +17,23 @@ import javax.swing.WindowConstants;
  */
 public class OSWindow extends JFrame {
     static final int WINDOW_BOTTOM_BORDER = 34,WINDOW_RIGHT_BORDER=16;
-    private PanelController panelController;
-    keyListener
     
-    public OSWindow(String title, int windowWidth, int windowHeight, ){
-        setTitle(title);
-        setSize(windowWidth+WINDOW_RIGHT_BORDER,windowHeight + WINDOW_BOTTOM_BORDER);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setVisible(true);
-        addKeyListener(keyListener);
-                
-     this.panelController = new PanelController(keyListener);
-
+    private CardLayout cardLayout = new CardLayout();
+    private JPanel mainPanel = new JPanel(cardLayout);
+    private MyKeyListener keyListener = new MyKeyListener();
+    private PanelController panelController = new PanelController(cardLayout,  mainPanel , keyListener);
+    
+    public OSWindow(String title, int windowWidth, int windowHeight){
+        this.setTitle(title);
+        this.setSize(windowWidth+WINDOW_RIGHT_BORDER,windowHeight + WINDOW_BOTTOM_BORDER);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.addKeyListener(keyListener);
+        this.add(this.mainPanel);
         
-        this.panelController.showCurrentPanel();
+        setVisible(true);
     }
     
+    public void startGame(){
+        this.panelController.switchToPanel("Game");
+    }
 }
