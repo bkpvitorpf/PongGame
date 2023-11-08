@@ -7,8 +7,11 @@ package Panels;
 import Controllers.PanelController;
 import Utilities.MyKeyListener;
 import java.awt.CardLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import javax.swing.WindowConstants;
 
 /**
@@ -18,10 +21,10 @@ import javax.swing.WindowConstants;
 public class OSWindow extends JFrame {
     static final int WINDOW_BOTTOM_BORDER = 34,WINDOW_RIGHT_BORDER=16;
     
-    private CardLayout cardLayout = new CardLayout();
-    private JPanel mainPanel = new JPanel(cardLayout);
-    private MyKeyListener keyListener = new MyKeyListener();
-    private PanelController panelController = new PanelController(cardLayout,  mainPanel , keyListener);
+    private final CardLayout cardLayout = new CardLayout();
+    private final JPanel mainPanel = new JPanel(cardLayout);
+    private final MyKeyListener keyListener = new MyKeyListener();
+    private final PanelController panelController = new PanelController(cardLayout,  mainPanel , keyListener);
     
     public OSWindow(String title, int windowWidth, int windowHeight){
         this.setTitle(title);
@@ -34,6 +37,14 @@ public class OSWindow extends JFrame {
     }
     
     public void startGame(){
-        this.panelController.switchToPanel("Game");
+        Timer timer = new Timer(25, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Panel controller
+                panelController.execute();
+            }
+        });
+
+        timer.start();
     }
 }

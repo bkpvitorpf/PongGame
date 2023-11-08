@@ -44,19 +44,14 @@ public class GamePanel extends Panel {
      * Executar as operações do jogo. Deve ser chamado continuamente
      */
     public void runGame() {
-        // make a new Timer
-        Timer timer = new Timer(25, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // game logic
-                gameController.runGameLogic();
-
-                // repaint the screen
-                repaint();
-            //    game.repaint();
-            }
-        });
-
-        timer.start();
+        // game logic
+        gameController.runGameLogic();
+                
+        // repaint the screen
+        repaint();
+    }
+    
+    public String getGameWinner(){
+        return gameController.getWinner();
     }
 }

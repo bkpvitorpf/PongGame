@@ -28,6 +28,9 @@ public class GameController {
     private final Ball ball;
     private int speedCounter=0;
     private final int maxSpeedCounter = 5;
+    private static int objectsCount = 0;
+    public String winner = "";
+    private final int maxPointCounter = 2;
     
     public GameController(MyKeyListener keyListener){
         this.ball = new Ball(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 1, 1, 3, Color.blue, 10, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -37,6 +40,8 @@ public class GameController {
         this.racketControllers.add(new RacketController(KeyEvent.VK_UP, KeyEvent.VK_DOWN, rackets.get(1), keyListener, WINDOW_HEIGHT));
         this.scores.add(new Score("Player 1 - ",WINDOW_WIDTH/4 - 15,50,0,Color.yellow));
         this.scores.add(new Score("Player 2 - ",WINDOW_WIDTH/4 -15 + 225,50,0,Color.green));
+    
+        GameController.objectsCount ++;
     }
     
     public void showObjectsOnScreen(Graphics g){
@@ -79,6 +84,9 @@ public class GameController {
             this.checkForScore();
             
             this.respawnBallWhenItExitOfScreen();
+            
+            //Verifica se algum player ganhou o jogo
+            this.checkIfHasAWinner();
     }
     
     private void makeBallBounceOnEdges(){
@@ -157,5 +165,18 @@ public class GameController {
                 this.increasePlayer2Score();
             }
         }
+    }
+    
+    private void checkIfHasAWinner(){
+        if(scores.get(0).getValue() == maxPointCounter){
+            this.winner = "Player 1";
+        }
+        else if(scores.get(1).getValue() == maxPointCounter){
+            this.winner = "Player 2"; 
+        }
+    }
+    
+    public String getWinner(){
+        return this.winner;
     }
 }
