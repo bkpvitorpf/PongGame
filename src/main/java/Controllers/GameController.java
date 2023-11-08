@@ -38,8 +38,8 @@ public class GameController {
         this.rackets.add(new Racket((WINDOW_WIDTH - 15), 150, 150, 5, Color.green));
         this.racketControllers.add(new RacketController(KeyEvent.VK_W, KeyEvent.VK_S, rackets.get(0), keyListener, WINDOW_HEIGHT));
         this.racketControllers.add(new RacketController(KeyEvent.VK_UP, KeyEvent.VK_DOWN, rackets.get(1), keyListener, WINDOW_HEIGHT));
-        this.scores.add(new Score("Player 1 - ",WINDOW_WIDTH/4 - 15,50,0,Color.yellow));
-        this.scores.add(new Score("Player 2 - ",WINDOW_WIDTH/4 -15 + 225,50,0,Color.green));
+        this.scores.add(new Score("Player 1 - ",WINDOW_WIDTH/4 - 15,25,0,Color.yellow));
+        this.scores.add(new Score("Player 2 - ",WINDOW_WIDTH/4 -15 + 225,25,0,Color.green));
     
         GameController.objectsCount ++;
     }
