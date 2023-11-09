@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 public class PanelController {
     private final GamePanel gamePanel;
     private final Panel startPanel;
+    private Panel endPanel;
     private String currentPanel;
     private final CardLayout cards;
     private final JPanel mainPanel;
@@ -26,6 +27,7 @@ public class PanelController {
     private static int objectsCount = 0;
 
     public PanelController(CardLayout cards, JPanel mainPanel , MyKeyListener keyListener) {
+        this.endPanel = null;
         this.gamePanel = new GamePanel(keyListener);
         this.startPanel = new StartPanel();
         this.currentPanel = "Start";
@@ -47,15 +49,25 @@ public class PanelController {
     };
     
     public void execute(){
-        if(keylistener.isKeyPressed(KeyEvent.VK_ENTER) && ("Start".equals(this.currentPanel))){
-            this.switchToPanel("Game");
+        if(keylistener.isKeyPressed(KeyEvent.VK_ENTER) && this.currentPanel.equals("Start")){
+            this.switchToPanel("Game");      
+        }
+        
+        if(keylistener.isKeyPressed(KeyEvent.VK_H) && this.currentPanel.equals("End")){
+            this.switchToPanel("Start");
         }
         
         if("Game".equals(this.currentPanel)){
             this.gamePanel.runGame();
             
             if(!this.gamePanel.getGameWinner().isEmpty()){
-                this.switchToPanel("Start");
+                this.endPanel = new EndPanel(this.gamePanel.getGameWinner());
+                
+                this.mainPanel.add(this.endPanel,"End");
+                
+                this.gamePanel.resetGame();
+                
+                this.switchToPanel("End");
             }
         }
     }

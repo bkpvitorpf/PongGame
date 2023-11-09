@@ -54,4 +54,8 @@ public class GamePanel extends Panel {
     public String getGameWinner(){
         return gameController.getWinner();
     }
+    
+    public void resetGame(){
+        this.gameController.resetGame();
+    }
 }

@@ -28,9 +28,9 @@ public class StartPanel extends Panel {
         
         g.drawString("Pong ++;", (PANEL_WIDTH - 280)/2, (PANEL_HEIGHT-60)/2);
         
-        Font subtitleFont = new Font("Verdana", Font.BOLD, 16);
+        Font textFont = new Font("Verdana", Font.BOLD, 16);
 
-        g.setFont(subtitleFont);
+        g.setFont(textFont);
         g.setColor(Color.WHITE);
         
         g.drawString("Pressione \"Enter\" para iniciar", (PANEL_WIDTH - 245)/2, (PANEL_HEIGHT+80)/2);

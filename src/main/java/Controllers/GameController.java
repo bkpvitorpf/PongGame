@@ -29,7 +29,7 @@ public class GameController {
     private int speedCounter=0;
     private final int maxSpeedCounter = 5;
     private static int objectsCount = 0;
-    public String winner = "";
+    private String winner;
     private final int maxPointCounter = 2;
     
     public GameController(MyKeyListener keyListener){
@@ -40,7 +40,8 @@ public class GameController {
         this.racketControllers.add(new RacketController(KeyEvent.VK_UP, KeyEvent.VK_DOWN, rackets.get(1), keyListener, WINDOW_HEIGHT));
         this.scores.add(new Score("Player 1 - ",WINDOW_WIDTH/4 - 15,25,0,Color.yellow));
         this.scores.add(new Score("Player 2 - ",WINDOW_WIDTH/4 -15 + 225,25,0,Color.green));
-    
+        this.winner = "";
+        
         GameController.objectsCount ++;
     }
     
@@ -58,11 +59,8 @@ public class GameController {
 
     public void runGameLogic(){
         //Movimentação
-        
             ball.move();
             
-            //System.out.println("Criou" + ball.getObjectsCount());
-
             // Inicializando os controladores das raquetes
             for(int racketControllersCounter=0; racketControllersCounter < racketControllers.size(); racketControllersCounter++){
                 racketControllers.get(racketControllersCounter).checkForMoveDownCommand();
@@ -70,7 +68,6 @@ public class GameController {
             }
         
         //Lógica
-        
             this.makeBallBounceOnEdges();
         
             // Verificando a colisão da bola com as raquetes
@@ -80,7 +77,7 @@ public class GameController {
                 }
             }
             
-            //Verifica qual player marcou o ponto
+            //Verifica se algum player marcou ponto
             this.checkForScore();
             
             this.respawnBallWhenItExitOfScreen();
@@ -123,8 +120,7 @@ public class GameController {
     private void respawnBallWhenItExitOfScreen(){
         if(this.checkWetherBallHasLeftScreen()){
             //Faz a bola aparecer no centro da tela
-            ball.setXPosition(WINDOW_WIDTH/2);
-            ball.setYPosition(WINDOW_HEIGHT/2);
+            this.resetBallPosition();
             
             //Aleatoriza  a direção que a bola seguirá
             
@@ -179,4 +175,22 @@ public class GameController {
     public String getWinner(){
         return this.winner;
     }
+    
+    public void resetGame(){
+        this.winner = "";
+        
+        this.resetScores();
+        
+        this.resetBallPosition();
+    }
+    
+    private void resetBallPosition(){
+        ball.setXPosition(WINDOW_WIDTH/2);
+        ball.setYPosition(WINDOW_HEIGHT/2);
+    };
+    
+    private void resetScores(){
+        this.scores.get(0).setScore(0);
+        this.scores.get(1).setScore(0);
+    };
 }
