@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Objects;
 
 import java.awt.Color;
@@ -11,12 +7,12 @@ import java.awt.Graphics;
  *
  * @author VPF
  */
-public class Wall extends GameObject{
+public class Wall extends GameObject {
     static final int WALL_WIDTH = 15;
     private int life;
-    
-    public Wall(int xPosition, int yPosition, int height, int width,Color color, int life) {
-        super (xPosition, yPosition, height,width, color);
+
+    public Wall(int xPosition, int yPosition, int height, int width, Color color, int life) {
+        super(xPosition, yPosition, height, width, color);
         this.life = life;
     }
 
@@ -32,5 +28,10 @@ public class Wall extends GameObject{
 
     public void setLife(int life) {
         this.life = life;
+    }
+
+    @Override
+    public void update() {
+        repaint();
     }
 }

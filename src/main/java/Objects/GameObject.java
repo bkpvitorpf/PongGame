@@ -1,34 +1,31 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Objects;
-import java.awt.*;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
 import javax.swing.JPanel;
+
 /**
  *
  * @author VPF
  */
-public class GameObject extends JPanel {
+public abstract class GameObject extends JPanel {
     private static int objectsCount = 0;
     public int xPosition, yPosition, width, height;
     public Color color;
-    
-    public GameObject (int xPosition, int yPosition, int height, int width, Color color) {
+
+    public GameObject(int xPosition, int yPosition, int height, int width, Color color) {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.height = height;
         this.width = width;
         this.color = color;
-        
-        GameObject.objectsCount ++;
+
+        GameObject.objectsCount++;
     }
-        
+
     @Override
-    public void paint(Graphics g){};
-    
-    public void update(){
-        repaint();
+    public void paint(Graphics g) {
     };
 
     public int getXPosition() {
@@ -47,16 +44,8 @@ public class GameObject extends JPanel {
         this.yPosition = yPosition;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
     public void setWidth(int width) {
         this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
     }
 
     public void setHeight(int height) {
@@ -70,8 +59,18 @@ public class GameObject extends JPanel {
     public void setColor(Color color) {
         this.color = color;
     }
-    
-    public int getObjectsCount(){
+
+    public int getHeight() {
+        return this.height;
+    }
+
+    public int getWidth() {
+        return this.width;
+    }
+
+    public int getObjectsCount() {
         return GameObject.objectsCount;
     };
+
+    public abstract void update();
 }

@@ -1,16 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Panels;
 
-import Controllers.GameController;
 import java.awt.Color;
 import java.awt.Graphics;
+
+import Controllers.GameController;
 import Utilities.MyKeyListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.Timer;
 
 /**
  *
@@ -22,8 +16,8 @@ public class GamePanel extends Panel {
     public GamePanel(MyKeyListener keyListener) {
         // Chama o construtor da classe Panel
         super();
-        
-        // Instancia o controlador do jogo        
+
+        // Instancia o controlador do jogo
         this.gameController = new GameController(keyListener);
     }
 
@@ -46,16 +40,15 @@ public class GamePanel extends Panel {
     public void runGame() {
         // game logic
         gameController.runGameLogic();
-                
-        // repaint the screen
+
         repaint();
     }
-    
-    public String getGameWinner(){
+
+    public String getGameWinner() {
         return gameController.getWinner();
     }
-    
-    public void resetGame(){
+
+    public void resetGame() {
         this.gameController.resetGame();
     }
 }

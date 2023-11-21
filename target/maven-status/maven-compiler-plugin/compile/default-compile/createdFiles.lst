@@ -1,8 +1,8 @@
 Objects\Score.class
 Controllers\RacketController.class
 Objects\Wall.class
+Controllers\GameController.class
 Objects\Ball.class
 Utilities\MyKeyListener.class
 Objects\Racket.class
-Controllers\GameController.class
 Objects\GameObject.class

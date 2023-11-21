@@ -3,41 +3,31 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Objects;
-import java.awt.*;
-import java.util.Random;
+
+import java.awt.Color;
+import java.awt.Graphics;
 
 /**
  *
  * @author VPF
  */
 public class Ball extends GameObject {
-
     private int xDirection, yDirection;
-    private final int WINDOW_WIDTH;
-    private final int WINDOW_HEIGHT;
-    // Definindo a classe GameObject como superclasse da classe Ball
-    // ball constructor assigns values to instance variables
     private float speed;
-    // Definindo a classe GameObject como superclasse da classe Ball
-    // ball constructor assigns values to instance variables
-    
+
     /**
-     * @param xPosition - Posição da bola no eixo x
-     * @param yPosition - Posição da bola no eixo y
-     * @param xDirection - Direção da bola no eixo x
-     * @param yDirection - Direção da bola no eixo y
-     * @param speed - Velocidade da bola
-     * @param color - Cor da bola
-     * @param size - Tamanho do diâmetro da bola
-     * @param WINDOW_WIDTH - LArgura da tela onde a bola está sendo renderizada
-     * @param WINDOW_HEIGHT
+     * @param xPosition     - Posição da bola no eixo x
+     * @param yPosition     - Posição da bola no eixo y
+     * @param xDirection    - Direção da bola no eixo x
+     * @param yDirection    - Direção da bola no eixo y
+     * @param speed         - Velocidade da bola
+     * @param color         - Cor da bola
+     * @param size          - Tamanho do diâmetro da bola
      */
-    public Ball(int xPosition, int yPosition,int xDirection, int yDirection, int speed, Color color, int size, int WINDOW_WIDTH,int WINDOW_HEIGHT) {
+    public Ball(int xPosition, int yPosition, int xDirection, int yDirection, int speed, Color color, int size) {
         super(xPosition, yPosition, size, size, color);
         this.xDirection = xDirection;
         this.yDirection = yDirection;
-        this.WINDOW_HEIGHT = WINDOW_HEIGHT;
-        this.WINDOW_WIDTH = WINDOW_WIDTH;
         this.speed = speed;
     }
 
@@ -45,17 +35,18 @@ public class Ball extends GameObject {
     public void paint(Graphics g) {
         g.setColor(color); // define a cor do pincel para a cor da bola
 
-        g.fillOval(xPosition, yPosition,this.width, this.width);// desenha a bola na posição x,y com largura e altura de size
+        g.fillOval(xPosition, yPosition, this.width, this.width);// desenha a bola na posição x,y com largura e altura
+                                                                 // de size
     }
 
     // Faz a bola avançar uma determinada quantidade de unidades numa determinada
     // direção
     public void move() {
-        this.xPosition += (this.speed*this.xDirection);
-        this.yPosition += (this.speed*this.yDirection);
+        this.xPosition += (this.speed * this.xDirection);
+        this.yPosition += (this.speed * this.yDirection);
     }
-    
-//Isso é lógica do jogo, não da bola
+
+    // Isso é lógica do jogo, não da bola
     /**
      * Faz a bola rebater nas bordas inferiores e superiores da tela
      * 
@@ -93,12 +84,17 @@ public class Ball extends GameObject {
     public void reverseXDirection() {
         this.xDirection *= -1;
     }
-    
-    public float getSpeed(){
+
+    public float getSpeed() {
         return this.speed;
-    } 
-    
-    public void setSpeed(float newSpeed){
+    }
+
+    public void setSpeed(float newSpeed) {
         this.speed = newSpeed;
-    } 
+    }
+
+    @Override
+    public void update() {
+        repaint();
+    }
 }
