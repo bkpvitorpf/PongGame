@@ -11,11 +11,15 @@ import java.awt.Graphics;
 public class Score extends GameObject {
     private int value;
     private final String text;
+        public static int objectsCount = 0;
+
 
     public Score(String text, int xPosition, int yPosition, int value, Color color) {
         super(xPosition, yPosition, 0, 0, color);
         this.value = value;
         this.text = text;
+        
+        Score.objectsCount++;
     }
     
     public int getValue(){
@@ -36,8 +40,8 @@ public class Score extends GameObject {
         g.drawString(this.text + " [ " +this.value+" ]", this.xPosition, this.yPosition);
     };
 
-    @Override
-    public void update() {
-        repaint();
-    }
+//    @Override
+//    public void update() {
+//        repaint();
+//    }
 }

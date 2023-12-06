@@ -10,9 +10,14 @@ import java.awt.Graphics;
  */
 public class EndPanel extends Panel {
     private final String gameWinner;
+    public static int objectsCount = 0;
     
     public EndPanel(String gameWinner) {
+        super();
+        
         this.gameWinner = gameWinner;
+        
+        EndPanel.objectsCount++;
     }
     
     @Override

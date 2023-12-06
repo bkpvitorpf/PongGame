@@ -10,10 +10,13 @@ import java.awt.Graphics;
 public class Racket extends GameObject {
     static final int RACKET_WIDTH = 15;
     private int step;
+    public static int objectsCount = 0;
 
     public Racket(int xPosition, int yPosition, int height, int step, Color color) {
         super(xPosition, yPosition, height, RACKET_WIDTH, color);
         this.step = step;
+        
+        Racket.objectsCount++;
     }
 
     @Override
@@ -38,8 +41,8 @@ public class Racket extends GameObject {
         this.setYPosition(this.getYPosition() + this.getStep());
     };
 
-    @Override
-    public void update() {
-        repaint();
-    }
+//    @Override
+//    public void update() {
+//        repaint();
+//    }
 }

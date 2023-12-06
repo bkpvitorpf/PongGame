@@ -1,7 +1,6 @@
 D:\Faculdade\P4\POO\Projeto\PongGame\src\main\java\Exceptions\WrongSpawnPlaceException.java
-D:\Faculdade\P4\POO\Projeto\PongGame\src\main\java\com\mycompany\ponggame\Game.java
 D:\Faculdade\P4\POO\Projeto\PongGame\src\main\java\Panels\GamePanel.java
-D:\Faculdade\P4\POO\Projeto\PongGame\src\main\java\Panels\OSWindow.java
+D:\Faculdade\P4\POO\Projeto\PongGame\src\main\java\Panels\GameWindow.java
 D:\Faculdade\P4\POO\Projeto\PongGame\src\main\java\Objects\GameObject.java
 D:\Faculdade\P4\POO\Projeto\PongGame\src\main\java\Controllers\PanelController.java
 D:\Faculdade\P4\POO\Projeto\PongGame\src\main\java\Objects\Racket.java
@@ -11,7 +10,7 @@ D:\Faculdade\P4\POO\Projeto\PongGame\src\main\java\Objects\Ball.java
 D:\Faculdade\P4\POO\Projeto\PongGame\src\main\java\Panels\EndPanel.java
 D:\Faculdade\P4\POO\Projeto\PongGame\src\main\java\Objects\Score.java
 D:\Faculdade\P4\POO\Projeto\PongGame\src\main\java\Panels\Panel.java
-D:\Faculdade\P4\POO\Projeto\PongGame\src\main\java\Utilities\MyKeyListener.java
+D:\Faculdade\P4\POO\Projeto\PongGame\src\main\java\Utilities\GameKeylistener.java
 D:\Faculdade\P4\POO\Projeto\PongGame\src\main\java\com\mycompany\ponggame\PongGame.java
 D:\Faculdade\P4\POO\Projeto\PongGame\src\main\java\Controllers\GameController.java
 D:\Faculdade\P4\POO\Projeto\PongGame\src\main\java\Objects\Wall.java

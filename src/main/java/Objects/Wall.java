@@ -10,10 +10,14 @@ import java.awt.Graphics;
 public class Wall extends GameObject {
     static final int WALL_WIDTH = 15;
     private int life;
+    public static int objectsCount = 0;
 
     public Wall(int xPosition, int yPosition, int height, int width, Color color, int life) {
         super(xPosition, yPosition, height, width, color);
         this.life = life;
+
+        Wall.objectsCount++;
+
     }
 
     @Override
@@ -31,7 +35,7 @@ public class Wall extends GameObject {
     }
 
     @Override
-    public void update() {
-        repaint();
+    public int getWidth() {
+        return Wall.WALL_WIDTH;
     }
 }

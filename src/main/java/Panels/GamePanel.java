@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import Controllers.GameController;
-import Utilities.MyKeyListener;
+import Utilities.GameKeylistener;
 
 /**
  *
@@ -12,13 +12,16 @@ import Utilities.MyKeyListener;
  */
 public class GamePanel extends Panel {
     private final GameController gameController;
+    public static int objectsCount = 0;
 
-    public GamePanel(MyKeyListener keyListener) {
+    public GamePanel(GameKeylistener keyListener) {
         // Chama o construtor da classe Panel
         super();
 
         // Instancia o controlador do jogo
         this.gameController = new GameController(keyListener);
+        
+        GamePanel.objectsCount++;
     }
 
     /**
@@ -41,7 +44,9 @@ public class GamePanel extends Panel {
         // game logic
         gameController.runGameLogic();
 
-        repaint();
+        //gameController.updateGame();
+       
+        this.repaint();
     }
 
     public String getGameWinner() {

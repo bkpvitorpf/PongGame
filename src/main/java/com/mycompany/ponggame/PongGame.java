@@ -1,9 +1,12 @@
 package com.mycompany.ponggame;
 
+import Panels.GameWindow;
+
 public class PongGame {
-    static Game game = new Game();
+    static GameWindow game = new GameWindow();
 
     public static void main(String[] args) {
-        game.start();
+        game.startGame();
+        game.getStatistics("Perspectiva estática - Antes do jogo começar");
     }
 }

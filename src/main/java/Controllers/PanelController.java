@@ -11,9 +11,10 @@ import javax.swing.JPanel;
 
 import Panels.EndPanel;
 import Panels.GamePanel;
+import Panels.GameWindow;
 import Panels.Panel;
 import Panels.StartPanel;
-import Utilities.MyKeyListener;
+import Utilities.GameKeylistener;
 
 /**
  *
@@ -26,10 +27,10 @@ public class PanelController {
     private String currentPanel;
     private final CardLayout cards;
     private final JPanel mainPanel;
-    private final MyKeyListener keylistener;
+    private final GameKeylistener keylistener;
     public static int objectsCount = 0;
 
-    public PanelController(CardLayout cards, JPanel mainPanel, MyKeyListener keyListener) {
+    public PanelController(CardLayout cards, JPanel mainPanel, GameKeylistener keyListener) {
         this.endPanel = null;
         this.gamePanel = new GamePanel(keyListener);
         this.startPanel = new StartPanel();
@@ -71,6 +72,8 @@ public class PanelController {
                 this.gamePanel.resetGame();
 
                 this.switchToPanel("End");
+                
+                GameWindow.getStatistics("Perspectiva Dinamica - Após o jogo");
             }
         }
     }

@@ -1,7 +1,6 @@
 package Objects;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
@@ -9,8 +8,8 @@ import javax.swing.JPanel;
  *
  * @author VPF
  */
-public abstract class GameObject extends JPanel {
-    private static int objectsCount = 0;
+public class GameObject extends JPanel {
+    public static int objectsCount = 0;
     public int xPosition, yPosition, width, height;
     public Color color;
 
@@ -23,10 +22,6 @@ public abstract class GameObject extends JPanel {
 
         GameObject.objectsCount++;
     }
-
-    @Override
-    public void paint(Graphics g) {
-    };
 
     public int getXPosition() {
         return xPosition;
@@ -60,10 +55,12 @@ public abstract class GameObject extends JPanel {
         this.color = color;
     }
 
+    @Override
     public int getHeight() {
         return this.height;
     }
 
+    @Override
     public int getWidth() {
         return this.width;
     }
@@ -72,5 +69,5 @@ public abstract class GameObject extends JPanel {
         return GameObject.objectsCount;
     };
 
-    public abstract void update();
+    // public abstract void update();
 }

@@ -11,12 +11,13 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
+import Exceptions.WrongSpawnPlaceException;
 import Objects.Ball;
 import Objects.GameObject;
 import Objects.Racket;
 import Objects.Score;
 import Objects.Wall;
-import Utilities.MyKeyListener;
+import Utilities.GameKeylistener;
 
 /**
  *
@@ -24,22 +25,22 @@ import Utilities.MyKeyListener;
  */
 public class GameController {
     final int WINDOW_WIDTH = 640, WINDOW_HEIGHT = 475;
-    private final List<Racket> rackets = new ArrayList<Racket>();
-    private final List<RacketController> racketControllers = new ArrayList<RacketController>();
-    private final List<Score> scores = new ArrayList<Score>();
-    private List<Wall> walls = new ArrayList<Wall>();
+    private final List<Racket> rackets = new ArrayList<>();
+    private final List<RacketController> racketControllers = new ArrayList<>();
+    private final List<Score> scores = new ArrayList<>();
+    private List<Wall> walls = new ArrayList<>();
     private final Ball ball;
     private int speedCounter = 0;
-    private final int maxSpeedCounter = 1; // 5
+    private final int maxSpeedCounter = 5; // 5
     public static int objectsCount = 0;
     private String winner;
-    private final int maxPointCounter = 2;
+    private final int maxPointCounter = 5;
     private int wallCount = 0;
-    private Timer timerWallSpawn;
-    private int timeToSpawnANewWall = 5000; // 5 seconds
-    private int maxNumberOfWalls = 4;
+    private final Timer timerWallSpawn;
+    private final int timeToSpawnANewWall = 5000; // 5 seconds
+    private int maxNumberOfWalls = 5;
 
-    public GameController(MyKeyListener keyListener) {
+    public GameController(GameKeylistener keyListener) {
         this.ball = new Ball(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 1, 1, 3, Color.blue, 10);
         this.rackets.add(new Racket(0, 50, 150, 5, Color.yellow));
         this.rackets.add(new Racket((WINDOW_WIDTH - 15), 150, 150, 5, Color.green));
@@ -194,7 +195,7 @@ public class GameController {
 
     private void increasePlayer1Score() {
         scores.get(0).setScore(scores.get(0).getValue() + 1);
-        scores.get(0).update();
+        // scores.get(0).update();
     };
 
     private void increasePlayer2Score() {
@@ -246,8 +247,55 @@ public class GameController {
     public void spawnWall() {
         int startXBoundary = 40;
         int startYBoundary = 40;
+        int offset = 40;
         int randomXValue = new Random().nextInt(startXBoundary, WINDOW_WIDTH - startXBoundary);
-        int randomYValue = new Random().nextInt(startYBoundary, WINDOW_HEIGHT - 15);
+        int randomYValue = new Random().nextInt(startYBoundary, WINDOW_HEIGHT - 50);
+
+        try {
+            // Verifica se as paredes vão spawnar próximas à outras paredes
+            for (int wallsCounter = 0; wallsCounter < walls.size(); wallsCounter++) {
+                int xPositionPlusHalfWidth = randomXValue + walls.get(wallsCounter).getWidth() / 2;
+                int xPositionMinusHalfWidth = randomXValue - walls.get(wallsCounter).getWidth() / 2;
+
+                int yPositionPlusHalfHeight = randomYValue + walls.get(wallsCounter).getHeight() / 2;
+                int yPositionMinusHalfHeight = randomYValue - walls.get(wallsCounter).getHeight() / 2;
+
+                int wallXPositionPlusHalfWidth = walls.get(wallsCounter).getXPosition()
+                        + walls.get(wallsCounter).getWidth() / 2;
+                int wallXPositionMinusHalfWidth = walls.get(wallsCounter).getXPosition()
+                        - walls.get(wallsCounter).getWidth() / 2;
+                int wallYPositionPlusHalfHeight = walls.get(wallsCounter).getYPosition()
+                        + walls.get(wallsCounter).getHeight() / 2;
+
+                int wallYPositionMinusHalfHeight = walls.get(wallsCounter).getYPosition()
+                        - walls.get(wallsCounter).getHeight() / 2;
+
+                if (xPositionPlusHalfWidth > (wallXPositionPlusHalfWidth - offset)
+                        && xPositionMinusHalfWidth < (wallXPositionMinusHalfWidth + offset)) {
+
+                    if (yPositionPlusHalfHeight > (wallYPositionMinusHalfHeight - offset)
+                            && yPositionMinusHalfHeight < (wallYPositionPlusHalfHeight + offset)) {
+                        throw new WrongSpawnPlaceException(
+                                "A parede tentou spawnar em um local muito próximo à outra parede");
+                    }
+                }
+
+                // Verifica se as paredes vão spawnar próximas à bola
+                if (xPositionPlusHalfWidth > (this.ball.getXPosition() - offset)
+                        && xPositionMinusHalfWidth < (this.ball.getXPosition() + offset)) {
+
+                    if (yPositionPlusHalfHeight > (this.ball.getYPosition() - offset)
+                            && yPositionMinusHalfHeight < (this.ball.getYPosition() + offset)) {
+                        throw new WrongSpawnPlaceException("A parede tentou spawnar em um local muito próximo à bola");
+                    }
+                }
+            }
+        } catch (Exception error) {
+            System.out.println(error);
+            spawnWall();
+
+            return;
+        }
 
         this.walls.add(new Wall(randomXValue, randomYValue, 150, 10, Color.PINK, 2));
     };
@@ -256,7 +304,7 @@ public class GameController {
         for (int wallsCount = 0; wallsCount < this.walls.size(); wallsCount++) {
             if (this.walls.get(wallsCount).getLife() == 0) {
                 this.walls.remove(wallsCount);
-                this.wallCount--;
+                // this.wallCount--;
             }
         }
     }

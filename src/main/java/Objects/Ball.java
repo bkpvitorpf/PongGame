@@ -14,6 +14,7 @@ import java.awt.Graphics;
 public class Ball extends GameObject {
     private int xDirection, yDirection;
     private float speed;
+    public static int objectsCount = 0;
 
     /**
      * @param xPosition     - Posição da bola no eixo x
@@ -29,6 +30,8 @@ public class Ball extends GameObject {
         this.xDirection = xDirection;
         this.yDirection = yDirection;
         this.speed = speed;
+        
+        Ball.objectsCount++;
     }
 
     @Override
@@ -93,8 +96,8 @@ public class Ball extends GameObject {
         this.speed = newSpeed;
     }
 
-    @Override
-    public void update() {
-        repaint();
-    }
+//    @Override
+//    public void update() {
+//        repaint();
+//    }
 }

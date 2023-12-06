@@ -3,10 +3,15 @@ package Utilities;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class MyKeyListener implements KeyListener {
+public class GameKeylistener implements KeyListener {
     // Cria um vetor de keys com todas as 128 keys da tabela ASCII
     private boolean keys[] = new boolean[128];
+    public static int objectsCount = 0;
 
+    public GameKeylistener() {
+        GameKeylistener.objectsCount++;
+    }
+    
     /*
      * Quando uma tecla é pressionada, a posição correspondente a essa tecla
      * no array de keys tem seu valor alterado para true. Exemplo: Se 'a'

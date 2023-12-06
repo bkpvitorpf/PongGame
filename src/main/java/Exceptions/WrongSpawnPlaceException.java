@@ -1,4 +1,4 @@
-//package Exceptions;
+package Exceptions;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -9,8 +9,8 @@
  *
  * @author VPF
  */
-//public class WrongSpawnPlaceException extends Exception {
-//    public WrongSpawnPlaceException(String errorMessage) {
-//        super(errorMessage);
-//    }
-//}
+public class WrongSpawnPlaceException extends Exception {
+    public WrongSpawnPlaceException(String errorMessage) {
+        super(errorMessage);
+    }
+}

@@ -9,7 +9,13 @@ import java.awt.Graphics;
  * @author VPF
  */
 public class StartPanel extends Panel {
-    // Definindo que a classe StartScreen faz parte da superclasse Screen
+    public static int objectsCount = 0;
+    
+    public StartPanel() {
+        super();
+        
+        StartPanel.objectsCount++;
+    }
 
     @Override
     public void paintComponent(Graphics g) {
