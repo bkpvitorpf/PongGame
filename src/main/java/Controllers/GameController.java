@@ -34,11 +34,13 @@ public class GameController {
     private final int maxSpeedCounter = 5; // 5
     public static int objectsCount = 0;
     private String winner;
-    private final int maxPointCounter = 5;
+    private final int maxPointCounter = 50;
     private int wallCount = 0;
     private final Timer timerWallSpawn;
-    private final int timeToSpawnANewWall = 5000; // 5 seconds
-    private int maxNumberOfWalls = 5;
+    private final int timeToSpawnANewWall = 1000; // 5 seconds
+    private int maxNumberOfWalls = 500;
+    static final int WALL_WIDTH = 15;
+    static final int WALL_HEIGHT = 150;
 
     public GameController(GameKeylistener keyListener) {
         this.ball = new Ball(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 1, 1, 3, Color.blue, 10);
@@ -247,52 +249,52 @@ public class GameController {
     public void spawnWall() {
         int startXBoundary = 40;
         int startYBoundary = 40;
-        int offset = 40;
+        int offset = 50;
         int randomXValue = new Random().nextInt(startXBoundary, WINDOW_WIDTH - startXBoundary);
         int randomYValue = new Random().nextInt(startYBoundary, WINDOW_HEIGHT - 50);
+        int newWallBorderRight = randomXValue + (WALL_WIDTH/2);
+        int newWallBorderLeft = randomXValue - (WALL_WIDTH/2);
+        int newWallBorderTop = randomYValue - (WALL_HEIGHT/2);
+        int newWallBorderBottom = randomXValue + (WALL_HEIGHT/2);
 
         try {
-            // Verifica se as paredes vão spawnar próximas à outras paredes
-            for (int wallsCounter = 0; wallsCounter < walls.size(); wallsCounter++) {
-                int xPositionPlusHalfWidth = randomXValue + walls.get(wallsCounter).getWidth() / 2;
-                int xPositionMinusHalfWidth = randomXValue - walls.get(wallsCounter).getWidth() / 2;
-
-                int yPositionPlusHalfHeight = randomYValue + walls.get(wallsCounter).getHeight() / 2;
-                int yPositionMinusHalfHeight = randomYValue - walls.get(wallsCounter).getHeight() / 2;
-
-                int wallXPositionPlusHalfWidth = walls.get(wallsCounter).getXPosition()
-                        + walls.get(wallsCounter).getWidth() / 2;
-                int wallXPositionMinusHalfWidth = walls.get(wallsCounter).getXPosition()
-                        - walls.get(wallsCounter).getWidth() / 2;
-                int wallYPositionPlusHalfHeight = walls.get(wallsCounter).getYPosition()
-                        + walls.get(wallsCounter).getHeight() / 2;
-
-                int wallYPositionMinusHalfHeight = walls.get(wallsCounter).getYPosition()
-                        - walls.get(wallsCounter).getHeight() / 2;
-
-                if (xPositionPlusHalfWidth > (wallXPositionPlusHalfWidth - offset)
-                        && xPositionMinusHalfWidth < (wallXPositionMinusHalfWidth + offset)) {
-
-                    if (yPositionPlusHalfHeight > (wallYPositionMinusHalfHeight - offset)
-                            && yPositionMinusHalfHeight < (wallYPositionPlusHalfHeight + offset)) {
+            for (int wallsCounter = 0; wallsCounter < this.walls.size(); wallsCounter++) {
+                int wallBorderRight = this.walls.get(wallsCounter).getXPosition() + (this.walls.get(wallsCounter).getWidth()/2);
+                int wallBorderLeft = this.walls.get(wallsCounter).getXPosition() - (this.walls.get(wallsCounter).getWidth()/2);
+                int wallBorderTop = this.walls.get(wallsCounter).getYPosition() - (this.walls.get(wallsCounter).getHeight()/2);
+                int wallBorderBottom = this.walls.get(wallsCounter).getYPosition() + (this.walls.get(wallsCounter).getHeight()/2); 
+                
+                // Verifica a colição do lado direito da parede
+                if(newWallBorderRight > (wallBorderLeft - offset) && newWallBorderRight < (wallBorderRight + offset)){
+                    // Verifica a colisão do lado inferior da parede
+                    if(newWallBorderBottom > (wallBorderTop - offset) && newWallBorderBottom < (wallBorderBottom + offset)){
                         throw new WrongSpawnPlaceException(
                                 "A parede tentou spawnar em um local muito próximo à outra parede");
                     }
                 }
-
-                // Verifica se as paredes vão spawnar próximas à bola
-                if (xPositionPlusHalfWidth > (this.ball.getXPosition() - offset)
-                        && xPositionMinusHalfWidth < (this.ball.getXPosition() + offset)) {
-
-                    if (yPositionPlusHalfHeight > (this.ball.getYPosition() - offset)
-                            && yPositionMinusHalfHeight < (this.ball.getYPosition() + offset)) {
-                        throw new WrongSpawnPlaceException("A parede tentou spawnar em um local muito próximo à bola");
+                
+                // Verifica a colisão do lado esquerdo da parede
+                if(newWallBorderLeft > (wallBorderLeft - offset) && newWallBorderLeft < (wallBorderRight + offset)){
+                   // Verifica a colisão do lado superior da parede
+                    if(newWallBorderTop > (wallBorderTop - offset) && newWallBorderTop < (wallBorderBottom + offset)){
+                        throw new WrongSpawnPlaceException(
+                                "A parede tentou spawnar em um local muito próximo à outra parede");
+                    }
+                }
+                
+                int ballXPosition = this.ball.getXPosition();
+                int ballYPosition = this.ball.getYPosition();
+                
+                //verifica a colisao com a bola
+                if(ballXPosition > (newWallBorderLeft - offset) && ballXPosition < (newWallBorderRight + offset)){
+                    if(ballYPosition > (newWallBorderTop - offset) && ballYPosition < (newWallBorderBottom + offset)){
+                        throw new WrongSpawnPlaceException(
+                                "A parede tentou spawnar em um local muito próximo à bola");
                     }
                 }
             }
-        } catch (Exception error) {
+        } catch (WrongSpawnPlaceException error) {
             System.out.println(error);
-            spawnWall();
 
             return;
         }
